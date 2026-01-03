@@ -9,29 +9,17 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  <path
-                    d="M10,30 L30,70 L50,40 L70,70 L90,30"
-                    fill="none"
-                    stroke="url(#footerGradient)"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <defs>
-                    <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{ stopColor: '#22d3ee' }} />
-                      <stop offset="100%" style={{ stopColor: '#9333ea' }} />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <span className="text-2xl font-bold tracking-tight">WebCore</span>
+              {/* FIXED: Relative path and flexible width */}
+              <img 
+                src="assets/webcore-logo.png" 
+                alt="WebCore Logo" 
+                className="h-10 w-auto object-contain"
+              />
+              <span className="text-2xl font-black tracking-tighter">WebCore</span>
             </div>
             <p className="text-slate-400 text-lg max-w-sm mb-8 leading-relaxed">
               We empower businesses without a digital footprint by building high-performance 
-              web solutions that drive growth and build lasting trust.
+              web solutions that drive growth and provide total peace of mind online.
             </p>
           </div>
 
@@ -51,10 +39,10 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-bold mb-6">Connect</h4>
             <ul className="space-y-4 text-slate-400 font-medium">
               <li className="flex items-center gap-2 hover:text-cyan-400 cursor-pointer transition-colors">
-                LinkedIn
+                Email: webcore112@gmail.com
               </li>
               <li className="flex items-center gap-2 hover:text-cyan-400 cursor-pointer transition-colors">
-                X (Twitter)
+                LinkedIn
               </li>
               <li className="flex items-center gap-2 hover:text-cyan-400 cursor-pointer transition-colors">
                 Instagram
@@ -73,6 +61,6 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;
