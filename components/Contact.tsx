@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-slate-500 text-sm font-bold uppercase tracking-widest mb-1">Direct Line</p>
-                  <p className="font-bold text-xl text-slate-200">hello@webcore.com</p>
+                  <p className="font-bold text-xl text-slate-200">webcore112@gmail.com</p>
                 </div>
               </div>
               
