@@ -4,12 +4,11 @@ import {
   X, 
   ChevronRight, 
   ChevronLeft, 
-  Github, 
-  Cloud, 
   Code, 
   CheckCircle,
   AlertCircle,
-  ExternalLink
+  ExternalLink,
+  FolderOpen
 } from 'lucide-react';
 
 interface Step {
@@ -20,42 +19,42 @@ interface Step {
 
 const steps: Step[] = [
   {
-    title: "1. The GitHub Repository",
-    description: "GitHub is the 'storage' for your code. Think of it like a Google Drive, but for websites.",
+    title: "1. Prepare Your Computer Folder",
+    description: "Before uploading to GitHub, you need to save these files correctly on your own computer.",
     details: [
-      "Go to github.com and click the '+' sign in the top right, then 'New repository'.",
-      "Name it 'webcore-website' and keep it Public.",
-      "Once created, click 'uploading an existing file' and drag all your website files into the box.",
-      "Scroll down and click 'Commit changes'."
+      "Create a folder on your Desktop named 'webcore-site'.",
+      "Inside that folder, create another folder named 'components'.",
+      "Save index.html, index.tsx, App.tsx, and metadata.json in the main folder.",
+      "Save all the other files (Hero.tsx, About.tsx, etc.) inside the 'components' folder."
     ]
   },
   {
-    title: "2. Setting up Netlify",
-    description: "Netlify takes your code from GitHub and makes it a real link (like www.webcore.com).",
+    title: "2. The GitHub Repository",
+    description: "GitHub is where your code lives online.",
     details: [
-      "Create a free account at netlify.com using your GitHub account to sign up.",
-      "Click 'Add new site' and choose 'Import an existing project'.",
-      "Connect to GitHub and select your 'webcore-website' repository from the list.",
-      "Click the green 'Deploy site' button. That's it!"
+      "On GitHub, click 'New' to create a repository named 'webcore-website'.",
+      "Keep it 'Public' and click 'Create repository'.",
+      "On the next screen, click 'uploading an existing file'.",
+      "Drag your entire 'webcore-site' folder into the upload box and click 'Commit changes'."
     ]
   },
   {
-    title: "3. How to Update Your Text",
-    description: "You asked if you can modify it later—here is exactly how you do that!",
+    title: "3. Connecting Netlify",
+    description: "Netlify turns your GitHub code into a live website link.",
     details: [
-      "Log into GitHub and find your file (e.g., components/Hero.tsx).",
-      "Click the little Pencil icon to edit the file.",
-      "Change the text inside the quotes, then click 'Commit changes'.",
-      "Netlify will see this change and update your live site automatically in 30 seconds!"
+      "Log into Netlify.com using your GitHub account.",
+      "Click 'Add new site' -> 'Import an existing project'.",
+      "Select your 'webcore-website' repository.",
+      "Netlify will automatically detect everything. Just click 'Deploy site'!"
     ]
   },
   {
-    title: "4. Custom Domain",
-    description: "If you want a professional name like 'webcore.com', here is what to do.",
+    title: "4. Making Future Changes",
+    description: "You can modify your site anytime through GitHub.",
     details: [
-      "In Netlify, go to 'Domain management'.",
-      "Click 'Add custom domain' and type in the name you want.",
-      "Netlify will guide you through buying it or connecting one you already own."
+      "To change text, go to GitHub, find the file (like Hero.tsx), and click the Pencil icon.",
+      "Edit the text inside the quotes, then click 'Commit changes'.",
+      "Netlify will automatically update your live website in seconds!"
     ]
   }
 ];
@@ -144,9 +143,12 @@ const DeploymentGuide: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <div className="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 shadow-sm shadow-cyan-200">
             <AlertCircle className="w-5 h-5 text-white" />
           </div>
-          <p className="text-sm text-cyan-900 font-semibold leading-tight">
-            <span className="font-bold">Pro Tip:</span> Once you close this guide, you can click the button in the corner anytime to see it again!
-          </p>
+          <div className="flex flex-col">
+            <p className="text-xs text-cyan-900 font-bold uppercase tracking-wider">Folder Tip</p>
+            <p className="text-sm text-cyan-800 leading-tight">
+              Make sure your files aren't buried inside extra folders. Your <b>index.html</b> should be in the main folder you upload!
+            </p>
+          </div>
         </div>
       </div>
     </div>
