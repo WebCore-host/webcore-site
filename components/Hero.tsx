@@ -4,7 +4,7 @@ import { ChevronRight, Globe, Zap, Shield, Monitor } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 overflow-hidden relative">
+    <section className="pt-32 pb-20 lg:pt-48 lg:pb-24 px-4 overflow-hidden relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-10 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-400 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full blur-[120px]"></div>
@@ -29,12 +29,9 @@ const Hero: React.FC = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-          <a href="#contact" className="w-full sm:w-auto gradient-bg text-white px-10 py-5 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-cyan-200">
+          <a href="#contact" className="w-full sm:w-auto gradient-bg text-white px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-cyan-200">
             Get Your Website
             <ChevronRight className="w-6 h-6" />
-          </a>
-          <a href="#services" className="w-full sm:w-auto bg-white text-slate-900 border-2 border-slate-100 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-slate-50 hover:border-slate-200 transition-all">
-            See Our Work
           </a>
         </div>
 
