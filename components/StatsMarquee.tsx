@@ -99,10 +99,6 @@ const StatsMarquee: React.FC = () => {
           ))}
         </div>
       </div>
-
-      {/* Side Fades for Aesthetics */}
-      <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
     </section>
   );
 };
