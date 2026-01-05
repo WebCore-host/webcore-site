@@ -160,8 +160,8 @@ const Contact: React.FC = () => {
                   disabled={isSubmitting}
                   className={`w-full gradient-bg text-white font-black text-lg py-4 rounded-xl shadow-2xl shadow-cyan-100 flex items-center justify-center gap-3 transition-all group ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:opacity-95 hover:scale-[0.99] active:scale-95'}`}
                 >
-                  {isSubmitting ? 'Sending Request...' : 'Request a Call'}
-                  {!isSubmitting && <Calendar className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
+                  {isSubmitting ? 'Sending...' : 'Contact Us'}
+                  {!isSubmitting && <Send className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
                 </button>
               </form>
             )}
