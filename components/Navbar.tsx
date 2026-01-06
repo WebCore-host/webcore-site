@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Logo from './Logo';
 import { Menu, X } from 'lucide-react';
@@ -46,6 +47,7 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center gap-8">
               <a href="#stats" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">Impact</a>
               <a href="#services" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">Services</a>
+              <a href="#pricing" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">Pricing</a>
               <a href="#about" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">About</a>
               <a href="#contact" className="gradient-bg text-white px-7 py-2.5 rounded-full font-black text-sm hover:shadow-xl hover:shadow-cyan-200 transition-all">
                 Take the next step
@@ -81,8 +83,9 @@ const Navbar: React.FC = () => {
           <div className="px-6 pt-8 pb-8 flex flex-col gap-4">
             {[
               { label: 'Impact', href: '#stats', delay: 'delay-[100ms]' },
-              { label: 'Services', href: '#services', delay: 'delay-[200ms]' },
-              { label: 'About', href: '#about', delay: 'delay-[300ms]' },
+              { label: 'Services', href: '#services', delay: 'delay-[150ms]' },
+              { label: 'Pricing', href: '#pricing', delay: 'delay-[200ms]' },
+              { label: 'About', href: '#about', delay: 'delay-[250ms]' },
             ].map((item) => (
               <a 
                 key={item.label}
@@ -97,7 +100,7 @@ const Navbar: React.FC = () => {
             ))}
             <div className={`mt-4 transition-all duration-500 transform ${
               isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            } delay-[400ms]`}>
+            } delay-[300ms]`}>
               <a 
                 href="#contact" 
                 onClick={closeMenu}
@@ -105,11 +108,6 @@ const Navbar: React.FC = () => {
               >
                 Take the next step
               </a>
-            </div>
-            
-            {/* Decorative element inside menu */}
-            <div className={`mt-4 pt-4 border-t border-slate-50 flex justify-center transition-all duration-700 ${isOpen ? 'opacity-100' : 'opacity-0'} delay-[500ms]`}>
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">WebCore Digital</div>
             </div>
           </div>
         </div>
