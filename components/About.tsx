@@ -4,7 +4,7 @@ import { Target, Users, Award, ShieldCheck, Zap, Sparkles, TrendingUp, CheckCirc
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-16 md:py-20 bg-white overflow-hidden scroll-mt-20">
+    <section id="about" className="py-16 md:py-20 bg-white overflow-hidden scroll-mt-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Content Split */}
