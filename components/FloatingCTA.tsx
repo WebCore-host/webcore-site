@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 
@@ -40,7 +39,7 @@ const FloatingCTA: React.FC = () => {
         onClick={scrollToContact}
         className="gradient-bg text-white px-6 py-4 rounded-full font-black text-sm md:text-base flex items-center gap-2 shadow-[0_20px_50px_rgba(34,211,238,0.3)] hover:shadow-[0_20px_60px_rgba(34,211,238,0.5)] hover:scale-105 active:scale-95 transition-all group"
       >
-        <span>Get Your Website</span>
+        <span>Take the next step</span>
         <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
       </a>
     </div>
