@@ -1,17 +1,17 @@
-
 import React from 'react';
 import { ChevronRight, Globe, Zap, Shield, Monitor } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
     <section className="pt-32 pb-20 lg:pt-48 lg:pb-24 px-4 overflow-hidden relative">
+      {/* Background Blobs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-10 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-400 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full blur-[120px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-cyan-400 font-bold text-sm mb-8 border border-slate-800 shadow-xl">
+      <div className="max-w-7xl mx-auto text-center relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-cyan-400 font-bold text-sm mb-8 border border-slate-800 shadow-xl animate-bounce-subtle">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -29,17 +29,25 @@ const Hero: React.FC = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-          <a href="#contact" className="w-full sm:w-auto gradient-bg text-white px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-cyan-200">
-            Get Your Website
+          <a href="#contact" className="w-full sm:w-auto gradient-bg text-white px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-cyan-200/50">
+            Take the next step to my website
             <ChevronRight className="w-6 h-6" />
           </a>
         </div>
 
         <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto opacity-50">
-           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic"><Zap className="w-5 h-5"/> Fast</div>
-           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic"><Shield className="w-5 h-5"/> Secure</div>
-           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic"><Globe className="w-5 h-5"/> Global</div>
-           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic"><Monitor className="w-5 h-5"/> Responsive</div>
+           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic">
+             <Zap className="w-5 h-5"/> Fast
+           </div>
+           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic">
+             <Shield className="w-5 h-5"/> Secure
+           </div>
+           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic">
+             <Globe className="w-5 h-5"/> Global
+           </div>
+           <div className="flex items-center justify-center gap-2 font-bold text-slate-500 italic">
+             <Monitor className="w-5 h-5"/> Responsive
+           </div>
         </div>
       </div>
     </section>
