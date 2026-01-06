@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Send, Calendar, Mail, MessageSquare, CheckCircle2, Phone } from 'lucide-react';
 
@@ -29,7 +30,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-10 md:py-16 bg-white relative overflow-hidden scroll-mt-20">
+    <section id="contact" className="py-10 md:py-16 bg-white relative overflow-hidden scroll-mt-2">
       <div className="max-w-7xl mx-auto px-4">
         <div className="bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 animate-in fade-in zoom-in duration-1000">
           
