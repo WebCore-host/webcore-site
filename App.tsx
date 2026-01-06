@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StatsMarquee from './components/StatsMarquee';
 import Services from './components/Services';
 import About from './components/About';
+import Pricing from './components/Pricing';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import DeploymentGuide from './components/DeploymentGuide';
@@ -43,6 +45,7 @@ const App: React.FC = () => {
           <StatsMarquee />
           <Services />
           <About />
+          <Pricing />
           <Contact />
         </main>
         <Footer />
