@@ -158,10 +158,17 @@ const Contact: React.FC = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className={`w-full gradient-bg text-white font-black text-lg py-4 rounded-xl shadow-2xl shadow-cyan-100 flex items-center justify-center gap-3 transition-all group ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:opacity-95 hover:scale-[0.99] active:scale-95'}`}
+                  className={`w-full gradient-bg text-white font-black text-base md:text-lg py-4 px-6 md:px-8 rounded-xl shadow-2xl shadow-cyan-100 flex items-center justify-center gap-2 md:gap-3 transition-all group ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:opacity-95 hover:scale-[0.99] active:scale-95'}`}
                 >
-                  {isSubmitting ? 'Sending...' : 'Take the next step to my website'}
-                  {!isSubmitting && <Send className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
+                  {isSubmitting ? (
+                    'Sending...'
+                  ) : (
+                    <>
+                      <span className="hidden md:inline">Take the next step to my website</span>
+                      <span className="md:hidden">Take the next step</span>
+                    </>
+                  )}
+                  {!isSubmitting && <Send className="w-4 h-4 md:w-5 h-5 group-hover:rotate-12 transition-transform shrink-0" />}
                 </button>
               </form>
             )}
