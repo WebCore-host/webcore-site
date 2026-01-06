@@ -1,38 +1,44 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TrendingUp, BarChart3, Globe2, Target, Users2 } from 'lucide-react';
+import CountUpStat from './CountUpStat';
 
 const stats = [
   {
-    value: "97%",
+    value: 97,
+    suffix: "%",
     label: "Customers say a website influences their purchasing decisions",
     source: "Source: BusinessDasher",
     icon: <Target className="w-5 h-5 text-cyan-500" />,
     tag: "PURCHASE POWER"
   },
   {
-    value: "84%",
+    value: 84,
+    suffix: "%",
     label: "Consumers trust a business more if it has a professional website",
     source: "Source: BusinessDasher",
     icon: <Users2 className="w-5 h-5 text-purple-500" />,
     tag: "TRUST FACTOR"
   },
   {
-    value: "76%",
+    value: 76,
+    suffix: "%",
     label: "Consumers search for a company’s website before visiting in person",
     source: "Source: Big Fish Local",
     icon: <Globe2 className="w-5 h-5 text-blue-500" />,
     tag: "LOCAL DISCOVERY"
   },
   {
-    value: "81%",
+    value: 81,
+    suffix: "%",
     label: "Shoppers research online before making a purchase",
     source: "Source: Big Fish Local",
     icon: <BarChart3 className="w-5 h-5 text-emerald-500" />,
     tag: "MARKET RESEARCH"
   },
   {
-    value: "50%+",
+    value: 50,
+    suffix: "%+",
     label: "Potential revenue growth for small businesses with a website",
     source: "Source: BusinessDasher",
     icon: <TrendingUp className="w-5 h-5 text-amber-500" />,
@@ -40,7 +46,7 @@ const stats = [
   }
 ];
 
-const StatCard: React.FC<{ stat: typeof stats[0]; index: number }> = ({ stat, index }) => (
+const StatCard: React.FC<{ stat: typeof stats[0]; index: number; forceStart?: boolean }> = ({ stat, index, forceStart }) => (
   <div 
     key={index} 
     className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl hover:border-cyan-100 transition-all duration-500 group w-full md:min-w-[420px]"
@@ -55,7 +61,11 @@ const StatCard: React.FC<{ stat: typeof stats[0]; index: number }> = ({ stat, in
     </div>
 
     <div className="text-5xl md:text-6xl font-black gradient-text mb-4 tracking-tighter">
-      {stat.value}
+      <CountUpStat 
+        end={stat.value} 
+        suffix={stat.suffix} 
+        manualStart={forceStart}
+      />
     </div>
     
     <div className="text-base md:text-lg font-bold text-slate-800 leading-snug mb-4 whitespace-normal">
@@ -72,11 +82,35 @@ const StatCard: React.FC<{ stat: typeof stats[0]; index: number }> = ({ stat, in
 );
 
 const StatsMarquee: React.FC = () => {
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  
   // Triple the stats for the infinite loop on desktop
   const displayStats = [...stats, ...stats, ...stats];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsSectionVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="stats" className="py-16 md:py-24 bg-white border-y border-slate-100 overflow-hidden relative scroll-mt-20">
+    <section 
+      id="stats" 
+      ref={sectionRef}
+      className="py-16 md:py-24 bg-white border-y border-slate-100 overflow-hidden relative scroll-mt-20"
+    >
       <style>
         {`
           @keyframes marquee-left {
@@ -105,18 +139,23 @@ const StatsMarquee: React.FC = () => {
         </h2>
       </div>
 
-      {/* MOBILE VIEW: Vertical Column */}
+      {/* MOBILE VIEW: Vertical Column (Observer per card) */}
       <div className="md:hidden px-4 flex flex-col gap-6">
         {stats.map((stat, index) => (
           <StatCard key={index} stat={stat} index={index} />
         ))}
       </div>
 
-      {/* DESKTOP VIEW: Infinite Marquee */}
+      {/* DESKTOP VIEW: Infinite Marquee (Simultaneous Trigger) */}
       <div className="hidden md:flex relative">
         <div className="flex animate-marquee-infinite whitespace-nowrap gap-6 px-6">
           {displayStats.map((stat, index) => (
-            <StatCard key={index} stat={stat} index={index} />
+            <StatCard 
+              key={index} 
+              stat={stat} 
+              index={index} 
+              forceStart={isSectionVisible} 
+            />
           ))}
         </div>
       </div>
