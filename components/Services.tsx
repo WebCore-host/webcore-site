@@ -37,7 +37,7 @@ const services = [
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-16 md:py-20 bg-slate-50/50 scroll-mt-20">
+    <section id="services" className="py-16 md:py-20 bg-slate-50/50 scroll-mt-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-sm font-bold tracking-widest text-cyan-600 uppercase mb-3">Our Expertise</h2>
@@ -53,12 +53,12 @@ const Services: React.FC = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="group bg-white p-8 rounded-3xl border border-slate-100 hover:border-cyan-200 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1"
+              className="group bg-white p-8 rounded-3xl border border-slate-100 hover:border-cyan-200 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-default"
             >
-              <div className="mb-6 p-4 bg-slate-50 w-fit rounded-2xl group-hover:scale-110 transition-transform duration-300">
+              <div className="mb-6 p-4 bg-slate-50 w-fit rounded-2xl transition-colors group-hover:bg-cyan-50">
                 {service.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-3 transition-colors group-hover:text-cyan-600">{service.title}</h3>
               <p className="text-slate-600 leading-relaxed">
                 {service.description}
               </p>
