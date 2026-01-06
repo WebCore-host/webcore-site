@@ -3,7 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Logo from './Logo';
 import { Menu, X } from 'lucide-react';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  activeTab?: 'home' | 'about' | 'pricing';
+  setActiveTab?: (tab: 'home' | 'about' | 'pricing') => void;
+  isMobile?: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,6 +25,17 @@ const Navbar: React.FC = () => {
   const closeMenu = () => {
     setIsOpen(false);
     document.body.style.overflow = 'unset';
+  };
+
+  const handleNavClick = (e: React.MouseEvent, tab: 'home' | 'about' | 'pricing', href: string) => {
+    if (isMobile && setActiveTab) {
+      e.preventDefault();
+      setActiveTab(tab);
+      closeMenu();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      closeMenu();
+    }
   };
 
   // Close menu on resize if switching to desktop
@@ -38,7 +55,11 @@ const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Brand Logo */}
-            <a href="#" className="flex items-center gap-2 group transition-all" onClick={closeMenu}>
+            <a 
+              href="#" 
+              className="flex items-center gap-2 group transition-all" 
+              onClick={(e) => handleNavClick(e, 'home', '#')}
+            >
               <Logo className="h-10" />
               <span className="text-2xl font-black text-slate-900 tracking-tighter group-hover:text-cyan-600 transition-colors ml-1">WebCore</span>
             </a>
@@ -82,31 +103,33 @@ const Navbar: React.FC = () => {
         >
           <div className="px-6 pt-8 pb-8 flex flex-col gap-4">
             {[
-              { label: 'Impact', href: '#stats', delay: 'delay-[100ms]' },
-              { label: 'Services', href: '#services', delay: 'delay-[150ms]' },
-              { label: 'Pricing', href: '#pricing', delay: 'delay-[200ms]' },
-              { label: 'About', href: '#about', delay: 'delay-[250ms]' },
+              { label: 'Home', tab: 'home' as const, href: '#', delay: 'delay-[100ms]' },
+              { label: 'About Us', tab: 'about' as const, href: '#about', delay: 'delay-[150ms]' },
+              { label: 'Pricing', tab: 'pricing' as const, href: '#pricing', delay: 'delay-[200ms]' },
             ].map((item) => (
               <a 
                 key={item.label}
                 href={item.href} 
-                onClick={closeMenu}
-                className={`text-3xl font-black text-slate-900 hover:text-cyan-600 transition-all duration-500 transform ${
+                onClick={(e) => handleNavClick(e, item.tab, item.href)}
+                className={`text-3xl font-black transition-all duration-500 transform flex items-center gap-4 ${
                   isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                } ${item.delay}`}
+                } ${item.delay} ${
+                  activeTab === item.tab ? 'text-cyan-600 translate-x-4' : 'text-slate-900'
+                }`}
               >
+                {activeTab === item.tab && <div className="w-2 h-8 bg-cyan-600 rounded-full" />}
                 {item.label}
               </a>
             ))}
             <div className={`mt-4 transition-all duration-500 transform ${
               isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            } delay-[300ms]`}>
+            } delay-[250ms]`}>
               <a 
                 href="#contact" 
                 onClick={closeMenu}
                 className="gradient-bg text-white w-full py-5 rounded-2xl font-black text-xl text-center flex items-center justify-center shadow-xl shadow-cyan-200 active:scale-95 transition-all"
               >
-                Take the next step
+                Let's talk business
               </a>
             </div>
           </div>
