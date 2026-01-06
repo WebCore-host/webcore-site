@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
               <a href="#services" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">Services</a>
               <a href="#about" className="text-slate-600 hover:text-slate-900 font-bold text-sm transition-colors">About</a>
               <a href="#contact" className="gradient-bg text-white px-7 py-2.5 rounded-full font-black text-sm hover:shadow-xl hover:shadow-cyan-200 transition-all">
-                Contact Us
+                Take the next step
               </a>
             </div>
 
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
                 onClick={closeMenu}
                 className="gradient-bg text-white w-full py-5 rounded-2xl font-black text-xl text-center flex items-center justify-center shadow-xl shadow-cyan-200 active:scale-95 transition-all"
               >
-                Contact Us
+                Take the next step
               </a>
             </div>
             
