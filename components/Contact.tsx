@@ -1,10 +1,31 @@
 
 import React, { useState } from 'react';
-import { Send, Calendar, Mail, MessageSquare, CheckCircle2, Phone } from 'lucide-react';
+import { Send, Calendar, Mail, MessageSquare, CheckCircle2, Phone, ChevronDown } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phone, setPhone] = useState('');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Strip all non-numeric characters
+    const numericValue = e.target.value.replace(/\D/g, '').substring(0, 10);
+    const length = numericValue.length;
+
+    // Apply formatting: (###) ###-####
+    let formattedValue = '';
+    if (length > 0) {
+      formattedValue += '(' + numericValue.substring(0, 3);
+      if (length > 3) {
+        // Added space after the closing parenthesis
+        formattedValue += ') ' + numericValue.substring(3, 6);
+        if (length > 6) {
+          formattedValue += '-' + numericValue.substring(6, 10);
+        }
+      }
+    }
+    setPhone(formattedValue);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +42,7 @@ const Contact: React.FC = () => {
       .then(() => {
         setSubmitted(true);
         setIsSubmitting(false);
+        setPhone(''); // Reset phone field
       })
       .catch((error) => {
         console.error(error);
@@ -138,9 +160,29 @@ const Contact: React.FC = () => {
                       name="phone"
                       type="tel" 
                       required 
+                      value={phone}
+                      onChange={handlePhoneChange}
                       className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" 
                       placeholder="(555) 000-0000" 
                     />
+                  </div>
+                </div>
+
+                <div className="group relative">
+                  <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">What plan interested you?</label>
+                  <div className="relative">
+                    <select 
+                      name="plan"
+                      required
+                      className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base appearance-none cursor-pointer pr-10"
+                    >
+                      <option value="" disabled selected>Select a plan...</option>
+                      <option value="essential">Essential Plan — $97/mo</option>
+                      <option value="growth">Growth Plan — $197/mo</option>
+                      <option value="pro">Pro Plan — $497/mo</option>
+                      <option value="not_sure">I'm not sure yet / Let's talk</option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
                 
