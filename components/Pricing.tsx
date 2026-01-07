@@ -77,7 +77,7 @@ const Pricing: React.FC = () => {
             {/* Setup Fee Badge */}
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
               <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
-              <span className="text-white font-black uppercase tracking-widest text-xs">NON-REFUNDABLE DEPOSIT FOR SETUP: $500</span>
+              <span className="text-white font-black uppercase tracking-widest text-xs">DEPOSIT FOR SETUP: $500</span>
             </div>
             
             {/* Guarantee Trust Badge */}
