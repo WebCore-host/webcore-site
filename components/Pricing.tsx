@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check, X, Sparkles, Zap, ShieldCheck, Rocket } from 'lucide-react';
+import { Check, X, Sparkles, Zap, ShieldCheck, Rocket, ShieldAlert } from 'lucide-react';
 
 const features = [
   "Tailormade Website",
@@ -73,10 +73,30 @@ const Pricing: React.FC = () => {
             No hidden fees. No surprises. Just honest pricing to get your business the results it deserves.
           </p>
           
-          {/* Setup Fee Badge */}
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
-            <span className="text-white font-black uppercase tracking-widest text-xs">NON-REFUNDABLE DEPOSIT FOR SETUP: $500</span>
+          <div className="flex flex-col items-center gap-6">
+            {/* Setup Fee Badge */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
+              <span className="text-white font-black uppercase tracking-widest text-xs">NON-REFUNDABLE DEPOSIT FOR SETUP: $500</span>
+            </div>
+            
+            {/* Guarantee Trust Badge */}
+            <div className="relative group animate-in fade-in slide-in-from-bottom-2 duration-1000 delay-300">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+              <div className="relative flex items-center gap-4 bg-white px-8 py-5 rounded-2xl border border-cyan-100 shadow-xl">
+                <div className="w-12 h-12 rounded-full bg-cyan-50 flex items-center justify-center shrink-0">
+                   <ShieldCheck className="w-7 h-7 text-cyan-500" />
+                </div>
+                <div className="text-left">
+                  <p className="text-slate-900 font-black uppercase tracking-[0.1em] text-base leading-tight">
+                    30-Day Money Back Guarantee
+                  </p>
+                  <p className="text-cyan-600 font-black uppercase tracking-widest text-[10px] mt-1">
+                    Yes, this includes the plan + the deposit!!
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
