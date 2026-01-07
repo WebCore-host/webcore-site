@@ -3,6 +3,10 @@ import React from 'react';
 import Logo from './Logo';
 
 const Footer: React.FC = () => {
+  const openGuide = () => {
+    window.dispatchEvent(new CustomEvent('open-deployment-guide'));
+  };
+
   return (
     <footer className="bg-slate-900 text-white pt-20 pb-10 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,6 +27,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-slate-300 font-bold text-sm">
               <li><a href="#stats" className="hover:text-cyan-400 transition-colors">The Impact</a></li>
               <li><a href="#services" className="hover:text-cyan-400 transition-colors">Our Services</a></li>
+              <li><a href="#pricing" className="hover:text-cyan-400 transition-colors">Pricing Plans</a></li>
               <li><a href="#about" className="hover:text-cyan-400 transition-colors">Company Story</a></li>
               <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact Us</a></li>
             </ul>
@@ -43,8 +48,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] font-black uppercase tracking-widest">
+        <div className="pt-8 border-t border-slate-800 flex flex-col md:row justify-between items-center gap-4 text-slate-500 text-[10px] font-black uppercase tracking-widest">
           <p>© {new Date().getFullYear()} WebCore Digital Solutions. All rights reserved.</p>
+          <button 
+            onClick={openGuide}
+            className="hover:text-cyan-400 transition-colors border border-slate-800 px-3 py-1 rounded-md"
+          >
+            Admin Guide
+          </button>
         </div>
       </div>
     </footer>
