@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check, X, Sparkles, Zap, ShieldCheck, Rocket, ShieldAlert } from 'lucide-react';
+import { Check, X, Sparkles, Zap, ShieldCheck, Rocket } from 'lucide-react';
 
 const features = [
   "Tailormade Website",
@@ -10,14 +10,14 @@ const features = [
   "Monthly Website Maintenance",
   "Mobile-Responsive Development",
   "Contact Form w/ Email Notifications",
-  "Favicon Implementation",
+  "Favicon Implementation", // Index 7 - First new feature for Growth
   "Loading State Animation",
   "Basic SEO Setup",
   "Bi-Weekly Website Maintenance",
   "One Website Improvement a Month",
   "Email Capture Popup",
   "Live Chat Widget",
-  "Advanced SEO with Schema Markup",
+  "Advanced SEO with Schema Markup", // Index 14 - First new feature for Pro
   "Google Analytics 4 Integration & Setup",
   "Weekly Website Maintenance",
   "Three Website Improvements per Month",
@@ -102,9 +102,9 @@ const Pricing: React.FC = () => {
 
         {/* Pricing Grid */}
         <div className="grid lg:grid-cols-3 gap-8 items-start">
-          {tiers.map((tier, idx) => (
+          {tiers.map((tier, tierIdx) => (
             <div 
-              key={idx}
+              key={tierIdx}
               className={`relative bg-white rounded-[3rem] p-8 lg:p-10 transition-all duration-500 group border shadow-sm hover:shadow-2xl ${
                 tier.popular 
                 ? 'border-cyan-400 ring-4 ring-cyan-400/10 scale-105 z-10 lg:-translate-y-4' 
@@ -139,14 +139,26 @@ const Pricing: React.FC = () => {
               <ul className="space-y-4 mb-10">
                 {features.map((feature, fIdx) => {
                   const isIncluded = fIdx < tier.includedCount;
+                  
+                  // Logic to check if this feature is "new" compared to the previous tier
+                  const prevIncludedCount = tierIdx > 0 ? tiers[tierIdx - 1].includedCount : 0;
+                  const isNewToThisTier = isIncluded && fIdx >= prevIncludedCount;
+
                   return (
                     <li key={fIdx} className={`flex items-start gap-3 text-xs font-bold leading-tight ${isIncluded ? 'text-slate-700' : 'text-slate-300'}`}>
                       {isIncluded ? (
-                        <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                        // Special neon styling for new features in Growth and Pro
+                        (tierIdx > 0 && isNewToThisTier) ? (
+                          <Check className="w-4 h-4 text-cyan-500 stroke-[4px] shrink-0 drop-shadow-[0_0_5px_rgba(6,182,212,0.8)]" />
+                        ) : (
+                          <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                        )
                       ) : (
                         <X className="w-4 h-4 text-slate-200 shrink-0" />
                       )}
-                      <span className={!isIncluded ? 'line-through opacity-50' : ''}>{feature}</span>
+                      <span className={`${!isIncluded ? 'line-through opacity-50' : ''} ${isNewToThisTier && tierIdx > 0 ? 'text-slate-900 font-black' : ''}`}>
+                        {feature}
+                      </span>
                     </li>
                   );
                 })}
