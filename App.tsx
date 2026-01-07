@@ -67,9 +67,14 @@ const App: React.FC = () => {
       {/* Global Loader */}
       <LoadingScreen isLoading={isLoading} />
 
-      {/* Main Website Content */}
-      <div className={`transition-all duration-1000 ${isLoading ? 'blur-sm scale-[0.98] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
-        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
+      {/* 
+          IMPORTANT: The Navbar is placed HERE, outside the animated wrapper.
+          This ensures its 'fixed' positioning is relative to the viewport.
+      */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
+
+      {/* Main Website Content Wrapper */}
+      <div className={`transition-all duration-1000 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           {isMobile ? (
             <div key={activeTab} className="animate-in fade-in slide-in-from-right-4 duration-500">
