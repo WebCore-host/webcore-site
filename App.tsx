@@ -77,7 +77,7 @@ const App: React.FC = () => {
       <div className={`transition-all duration-1000 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           {isMobile ? (
-            <div key={activeTab} className="animate-in fade-in slide-in-from-right-4 duration-500">
+            <div key={activeTab} className="pt-10 animate-in fade-in slide-in-from-right-4 duration-500">
               {renderMobileContent()}
             </div>
           ) : (
