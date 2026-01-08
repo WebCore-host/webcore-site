@@ -17,6 +17,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'home' | 'about' | 'pricing'>('home');
   const [isMobile, setIsMobile] = useState(false);
+  const [pricingModalPlan, setPricingModalPlan] = useState<string | null>(null);
 
   useEffect(() => {
     // Initial loading timer for a professional feel
@@ -56,7 +57,7 @@ const App: React.FC = () => {
       case 'about':
         return <About />;
       case 'pricing':
-        return <Pricing />;
+        return <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />;
       default:
         return null;
     }
@@ -86,7 +87,7 @@ const App: React.FC = () => {
               <StatsMarquee />
               <Services />
               <About />
-              <Pricing />
+              <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />
             </>
           )}
           {/* Contact is persistent on both desktop and mobile as requested */}
@@ -94,6 +95,15 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
+
+      {/* Pricing Modal Overlay */}
+      {pricingModalPlan && (
+        <Contact 
+          isModal 
+          initialPlan={pricingModalPlan} 
+          onClose={() => setPricingModalPlan(null)} 
+        />
+      )}
 
       {/* Sticky Floating CTA */}
       <FloatingCTA />
