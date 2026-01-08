@@ -66,7 +66,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   };
 
   const content = (
-    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'animate-in fade-in zoom-in duration-300 max-w-6xl w-full mx-4 pointer-events-auto' : 'animate-in fade-in zoom-in duration-1000'}`}>
+    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'animate-in fade-in zoom-in duration-300 max-w-6xl w-full pointer-events-auto' : 'animate-in fade-in zoom-in duration-1000'}`}>
       
       {/* Close Button for Modal */}
       {isModal && (
@@ -261,12 +261,14 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   if (isModal) {
     return (
       <div 
-        className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto py-8"
+        className="fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center"
         onClick={(e) => {
           if (e.target === e.currentTarget) onClose?.();
         }}
       >
-        {content}
+        <div className="w-full max-w-6xl my-auto">
+          {content}
+        </div>
       </div>
     );
   }
