@@ -87,8 +87,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
             <div className="hidden md:flex items-center gap-10">
               <a href="#stats" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Impact</a>
               <a href="#services" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Services</a>
-              <a href="#pricing" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Pricing</a>
               <a href="#about" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">About</a>
+              <a href="#pricing" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Pricing</a>
               <a href="#contact" className="gradient-bg text-white px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:shadow-2xl hover:shadow-cyan-200 transition-all active:scale-95">
                 Take the next step
               </a>
