@@ -14,28 +14,36 @@ import LoadingScreen from './components/LoadingScreen';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Default to false for instant visibility
+  const [isLoading, setIsLoading] = useState(true); // Start as true to show the intro
   const [activeTab, setActiveTab] = useState<'home' | 'about' | 'pricing'>('home');
   const [isMobile, setIsMobile] = useState(false);
   const [pricingModalPlan, setPricingModalPlan] = useState<string | null>(null);
 
   useEffect(() => {
-    let failsafeTimer: number;
+    let minTimerFinished = false;
+    let pageLoaded = false;
 
-    const handlePageLoad = () => {
-      clearTimeout(failsafeTimer);
-      setIsLoading(false);
+    const checkComplete = () => {
+      if (minTimerFinished && pageLoaded) {
+        setIsLoading(false);
+      }
     };
 
-    // If the document is already loaded, we don't need a failsafe
-    if (document.readyState === 'complete') {
-      setIsLoading(false);
-    } else {
-      // If the page takes more than 2.5 seconds to load, show the failsafe loader
-      failsafeTimer = window.setTimeout(() => {
-        setIsLoading(true);
-      }, 2500);
+    // Minimum display time of 500ms (0.5s) for branding impact
+    const timer = setTimeout(() => {
+      minTimerFinished = true;
+      checkComplete();
+    }, 500);
 
+    const handlePageLoad = () => {
+      pageLoaded = true;
+      checkComplete();
+    };
+
+    if (document.readyState === 'complete') {
+      pageLoaded = true;
+      checkComplete();
+    } else {
       window.addEventListener('load', handlePageLoad);
     }
 
@@ -51,7 +59,7 @@ const App: React.FC = () => {
     window.addEventListener('open-deployment-guide', handleOpenGuide);
     
     return () => {
-      clearTimeout(failsafeTimer);
+      clearTimeout(timer);
       window.removeEventListener('load', handlePageLoad);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('open-deployment-guide', handleOpenGuide);
@@ -80,14 +88,14 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Failsafe Loader - Only shown if connection is slow */}
+      {/* Loading Screen - Always appears for at least 0.5s */}
       <LoadingScreen isLoading={isLoading} />
 
       {/* Navbar stays fixed */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
 
       {/* Main Website Content Wrapper */}
-      <div className={`transition-all duration-500 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
+      <div className={`transition-all duration-700 ${isLoading ? 'blur-md scale-95 opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           {isMobile ? (
             <div key={activeTab} className="pt-10 animate-in fade-in slide-in-from-right-4 duration-500">
