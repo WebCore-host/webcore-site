@@ -20,10 +20,10 @@ const App: React.FC = () => {
   const [pricingModalPlan, setPricingModalPlan] = useState<string | null>(null);
 
   useEffect(() => {
-    // Initial loading timer for a professional feel
+    // Initial loading timer reduced to 500ms for a faster, modern feel
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 500);
 
     // Detect screen size for mobile logic
     const handleResize = () => {
@@ -74,8 +74,8 @@ const App: React.FC = () => {
       */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
 
-      {/* Main Website Content Wrapper */}
-      <div className={`transition-all duration-1000 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
+      {/* Main Website Content Wrapper - Faster entry transition */}
+      <div className={`transition-all duration-500 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           {isMobile ? (
             <div key={activeTab} className="pt-10 animate-in fade-in slide-in-from-right-4 duration-500">
