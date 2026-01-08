@@ -125,7 +125,7 @@ const App: React.FC = () => {
           </div>
           <Contact />
         </main>
-        <Footer />
+        <Footer setActiveTab={setActiveTab} isMobile={isMobile} />
       </div>
 
       {pricingModalPlan && (
