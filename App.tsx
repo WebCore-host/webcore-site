@@ -14,16 +14,30 @@ import LoadingScreen from './components/LoadingScreen';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Default to false for instant visibility
   const [activeTab, setActiveTab] = useState<'home' | 'about' | 'pricing'>('home');
   const [isMobile, setIsMobile] = useState(false);
   const [pricingModalPlan, setPricingModalPlan] = useState<string | null>(null);
 
   useEffect(() => {
-    // Initial loading timer reduced to 500ms for a faster, modern feel
-    const timer = setTimeout(() => {
+    let failsafeTimer: number;
+
+    const handlePageLoad = () => {
+      clearTimeout(failsafeTimer);
       setIsLoading(false);
-    }, 500);
+    };
+
+    // If the document is already loaded, we don't need a failsafe
+    if (document.readyState === 'complete') {
+      setIsLoading(false);
+    } else {
+      // If the page takes more than 2.5 seconds to load, show the failsafe loader
+      failsafeTimer = window.setTimeout(() => {
+        setIsLoading(true);
+      }, 2500);
+
+      window.addEventListener('load', handlePageLoad);
+    }
 
     // Detect screen size for mobile logic
     const handleResize = () => {
@@ -37,7 +51,8 @@ const App: React.FC = () => {
     window.addEventListener('open-deployment-guide', handleOpenGuide);
     
     return () => {
-      clearTimeout(timer);
+      clearTimeout(failsafeTimer);
+      window.removeEventListener('load', handlePageLoad);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('open-deployment-guide', handleOpenGuide);
     };
@@ -65,16 +80,13 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Global Loader */}
+      {/* Failsafe Loader - Only shown if connection is slow */}
       <LoadingScreen isLoading={isLoading} />
 
-      {/* 
-          IMPORTANT: The Navbar is placed HERE, outside the animated wrapper.
-          This ensures its 'fixed' positioning is relative to the viewport.
-      */}
+      {/* Navbar stays fixed */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
 
-      {/* Main Website Content Wrapper - Faster entry transition */}
+      {/* Main Website Content Wrapper */}
       <div className={`transition-all duration-500 ${isLoading ? 'blur-sm scale-[0.99] opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           {isMobile ? (
@@ -90,7 +102,6 @@ const App: React.FC = () => {
               <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />
             </>
           )}
-          {/* Contact is persistent on both desktop and mobile as requested */}
           <Contact />
         </main>
         <Footer />
