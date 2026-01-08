@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Send, Calendar, Mail, MessageSquare, CheckCircle2, Phone, ChevronDown, X } from 'lucide-react';
+import { Send, Mail, MessageSquare, CheckCircle2, ChevronDown, X } from 'lucide-react';
 
 interface ContactProps {
   isModal?: boolean;
@@ -12,12 +12,18 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phone, setPhone] = useState('');
+  
+  // States for handling smooth entry and exit transitions
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
-  // When modal opens, we want to reset submission state
   useEffect(() => {
     if (isModal) {
       setSubmitted(false);
       setPhone('');
+      // Trigger entry animation on next frame
+      const timer = setTimeout(() => setIsVisible(true), 10);
+      return () => clearTimeout(timer);
     }
   }, [isModal]);
 
@@ -36,6 +42,15 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       }
     }
     setPhone(formattedValue);
+  };
+
+  const startCloseSequence = () => {
+    if (!isModal) return;
+    setIsClosing(true);
+    // Wait for the 600ms animation to complete before calling parent onClose
+    setTimeout(() => {
+      onClose?.();
+    }, 600);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,13 +76,21 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       });
   };
 
+  const modalAnimationClasses = isModal 
+    ? `transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        isVisible && !isClosing 
+          ? 'opacity-100 translate-y-0 scale-100' 
+          : 'opacity-0 translate-y-32 scale-90'
+      }`
+    : 'animate-in fade-in zoom-in duration-1000';
+
   const content = (
-    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'animate-in fade-in zoom-in-90 slide-in-from-bottom-32 duration-1000 delay-150 ease-out max-w-6xl w-full pointer-events-auto' : 'animate-in fade-in zoom-in duration-1000'}`}>
+    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'max-w-6xl w-full pointer-events-auto' : ''} ${modalAnimationClasses}`}>
       
       {/* Close Button for Modal */}
       {isModal && (
         <button 
-          onClick={onClose}
+          onClick={startCloseSequence}
           className="absolute top-6 right-6 z-20 p-2 bg-slate-800/50 hover:bg-slate-800 rounded-full text-slate-400 hover:text-white transition-all focus:outline-none"
           aria-label="Close form"
         >
@@ -123,7 +146,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             </p>
             {isModal ? (
               <button 
-                onClick={onClose}
+                onClick={startCloseSequence}
                 className="px-8 py-3 rounded-xl gradient-bg text-white font-black shadow-xl hover:opacity-90 transition-all"
               >
                 Close Preview
@@ -255,9 +278,11 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   if (isModal) {
     return (
       <div 
-        className="fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center animate-in fade-in duration-700"
+        className={`fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center transition-opacity duration-[600ms] ${
+          isVisible && !isClosing ? 'opacity-100' : 'opacity-0'
+        }`}
         onClick={(e) => {
-          if (e.target === e.currentTarget) onClose?.();
+          if (e.target === e.currentTarget) startCloseSequence();
         }}
       >
         <div className="w-full max-w-6xl my-auto">
