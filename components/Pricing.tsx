@@ -100,6 +100,7 @@ const features = [
 const tiers = [
   {
     name: "Essential",
+    id: "essential",
     oldPrice: "209",
     price: "97",
     icon: <ShieldCheck className="w-6 h-6 text-slate-400" />,
@@ -109,6 +110,7 @@ const tiers = [
   },
   {
     name: "Growth",
+    id: "growth",
     oldPrice: "349",
     price: "197",
     icon: <Sparkles className="w-6 h-6 text-cyan-500" />,
@@ -118,6 +120,7 @@ const tiers = [
   },
   {
     name: "Pro",
+    id: "pro",
     oldPrice: "899",
     price: "497",
     icon: <Rocket className="w-6 h-6 text-purple-500" />,
@@ -127,7 +130,11 @@ const tiers = [
   }
 ];
 
-const Pricing: React.FC = () => {
+interface PricingProps {
+  onPlanSelect?: (planId: string) => void;
+}
+
+const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
   // Use a string ID like "tierIdx-featureIdx" to uniquely identify which tooltip is open
   const [activeFeatureId, setActiveFeatureId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -302,8 +309,8 @@ const Pricing: React.FC = () => {
                 })}
               </ul>
 
-              <a 
-                href="#contact"
+              <button 
+                onClick={() => onPlanSelect?.(tier.id)}
                 className={`w-full py-5 rounded-2xl font-black text-center flex items-center justify-center transition-all ${
                   tier.popular 
                   ? 'gradient-bg text-white shadow-xl shadow-cyan-200 hover:opacity-90 active:scale-95' 
@@ -311,7 +318,7 @@ const Pricing: React.FC = () => {
                 }`}
               >
                 {tier.cta}
-              </a>
+              </button>
             </div>
           ))}
         </div>
