@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 
@@ -10,8 +11,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
 
   useEffect(() => {
     if (!isLoading) {
-      // Allow time for the fade-out animation before removing from DOM
-      const timer = setTimeout(() => setShouldRender(false), 800);
+      // Shorter timeout to match faster CSS animation
+      const timer = setTimeout(() => setShouldRender(false), 400);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
@@ -20,7 +21,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
 
   return (
     <div 
-      className={`fixed inset-0 z-[200] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${
+      className={`fixed inset-0 z-[200] flex items-center justify-center bg-white transition-opacity duration-300 ease-in-out ${
         isLoading ? 'opacity-100' : 'opacity-0'
       }`}
     >
