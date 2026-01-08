@@ -22,16 +22,13 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   }, [isModal]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Strip all non-numeric characters
     const numericValue = e.target.value.replace(/\D/g, '').substring(0, 10);
     const length = numericValue.length;
 
-    // Apply formatting: (###) ###-####
     let formattedValue = '';
     if (length > 0) {
       formattedValue += '(' + numericValue.substring(0, 3);
       if (length > 3) {
-        // Added space after the closing parenthesis
         formattedValue += ') ' + numericValue.substring(3, 6);
         if (length > 6) {
           formattedValue += '-' + numericValue.substring(6, 10);
@@ -47,7 +44,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     
     const formData = new FormData(e.currentTarget);
     
-    // This sends the data to Netlify's "Honeypot" and Form bot
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -56,7 +52,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       .then(() => {
         setSubmitted(true);
         setIsSubmitting(false);
-        setPhone(''); // Reset phone field
+        setPhone('');
       })
       .catch((error) => {
         console.error(error);
@@ -66,7 +62,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   };
 
   const content = (
-    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'animate-in fade-in zoom-in duration-300 max-w-6xl w-full pointer-events-auto' : 'animate-in fade-in zoom-in duration-1000'}`}>
+    <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'animate-in fade-in zoom-in-90 slide-in-from-bottom-32 duration-1000 delay-150 ease-out max-w-6xl w-full pointer-events-auto' : 'animate-in fade-in zoom-in duration-1000'}`}>
       
       {/* Close Button for Modal */}
       {isModal && (
@@ -149,7 +145,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             onSubmit={handleSubmit} 
             className="space-y-4 md:space-y-6"
           >
-            {/* Hidden input for Netlify bot detection */}
             <input type="hidden" name="form-name" value="contact" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,7 +216,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
                 {!isModal && (
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 )}
-                {/* Add a hidden input if disabled so the value still gets submitted */}
                 {isModal && initialPlan && <input type="hidden" name="plan" value={initialPlan} />}
               </div>
             </div>
@@ -261,7 +255,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   if (isModal) {
     return (
       <div 
-        className="fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center"
+        className="fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center animate-in fade-in duration-700"
         onClick={(e) => {
           if (e.target === e.currentTarget) onClose?.();
         }}
