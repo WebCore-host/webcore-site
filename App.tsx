@@ -12,6 +12,7 @@ import DeploymentGuide from './components/DeploymentGuide';
 import FloatingCTA from './components/FloatingCTA';
 import LoadingScreen from './components/LoadingScreen';
 import FAQ from './components/FAQ';
+import Testimonials from './components/Testimonials';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
@@ -82,6 +83,8 @@ const App: React.FC = () => {
           return <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />;
         case 'faq':
           return <FAQ />;
+        case 'testimonials':
+          return <Testimonials />;
         default:
           return (
             <>
@@ -99,11 +102,7 @@ const App: React.FC = () => {
         return <FAQ />;
       }
       if (activeTab === 'testimonials') {
-        return (
-          <div className="min-h-[70vh] flex items-center justify-center pt-32">
-            <h1 className="text-6xl font-black text-slate-200 animate-pulse">Empty</h1>
-          </div>
-        );
+        return <Testimonials />;
       }
       return (
         <>
