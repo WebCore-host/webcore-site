@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import DeploymentGuide from './components/DeploymentGuide';
 import FloatingCTA from './components/FloatingCTA';
 import LoadingScreen from './components/LoadingScreen';
+import FAQ from './components/FAQ';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
@@ -64,7 +65,7 @@ const App: React.FC = () => {
   }, []);
 
   const renderContent = () => {
-    // MOBILE VIEW: Keep original logic exactly as it was
+    // MOBILE VIEW
     if (isMobile) {
       switch (activeTab) {
         case 'home':
@@ -79,8 +80,9 @@ const App: React.FC = () => {
           return <About />;
         case 'pricing':
           return <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />;
+        case 'faq':
+          return <FAQ />;
         default:
-          // Default to home if state gets into faq/testimonials on mobile resize
           return (
             <>
               <Hero />
@@ -91,9 +93,12 @@ const App: React.FC = () => {
       }
     } 
     
-    // DESKTOP/TABLET VIEW: New Page Logic
+    // DESKTOP/TABLET VIEW
     else {
-      if (activeTab === 'faq' || activeTab === 'testimonials') {
+      if (activeTab === 'faq') {
+        return <FAQ />;
+      }
+      if (activeTab === 'testimonials') {
         return (
           <div className="min-h-[70vh] flex items-center justify-center pt-32">
             <h1 className="text-6xl font-black text-slate-200 animate-pulse">Empty</h1>
