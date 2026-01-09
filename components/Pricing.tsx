@@ -2,7 +2,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Check, X, Sparkles, Zap, ShieldCheck, Rocket, Info } from 'lucide-react';
 
-const features = [
+interface FeatureItem {
+  name: string;
+  desc: string;
+  alwaysIncluded?: boolean;
+}
+
+const features: FeatureItem[] = [
   { 
     name: "Tailormade Website", 
     desc: "A website designed and developed specifically for your business goals, brand, and content, rather than using a generic template." 
@@ -54,6 +60,10 @@ const features = [
   { 
     name: "Email Signup Popup", 
     desc: "A popup that collects visitor emails for newsletters, promotions, or follow-ups." 
+  },
+  { 
+    name: "Fast Response (<12 Hour response)", 
+    desc: "Priority communication ensuring your queries are handled within a guaranteed 12-hour window for total peace of mind."
   },
   { 
     name: "Live Chat Feature", 
@@ -114,7 +124,7 @@ const tiers = [
     oldPrice: "349",
     price: "197",
     icon: <Sparkles className="w-6 h-6 text-cyan-500" />,
-    includedCount: 14,
+    includedCount: 15,
     popular: true,
     cta: "Get Started"
   },
@@ -124,7 +134,7 @@ const tiers = [
     oldPrice: "899",
     price: "497",
     icon: <Rocket className="w-6 h-6 text-purple-500" />,
-    includedCount: 23,
+    includedCount: 24,
     popular: false,
     cta: "Go Pro"
   }
@@ -135,7 +145,6 @@ interface PricingProps {
 }
 
 const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
-  // Use a string ID like "tierIdx-featureIdx" to uniquely identify which tooltip is open
   const [activeFeatureId, setActiveFeatureId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const desktopTooltipRef = useRef<HTMLDivElement>(null);
@@ -258,9 +267,9 @@ const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
               {/* Feature List */}
               <ul className="space-y-4 mb-10">
                 {features.map((feature, fIdx) => {
-                  const isIncluded = fIdx < tier.includedCount;
+                  const isIncluded = feature.alwaysIncluded || fIdx < tier.includedCount;
                   const prevIncludedCount = tierIdx > 0 ? tiers[tierIdx - 1].includedCount : 0;
-                  const isNewToThisTier = isIncluded && fIdx >= prevIncludedCount;
+                  const isNewToThisTier = isIncluded && fIdx >= prevIncludedCount && !feature.alwaysIncluded;
                   const uniqueId = `${tierIdx}-${fIdx}`;
 
                   return (
@@ -276,7 +285,7 @@ const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
                       )}
                       
                       <div className="flex items-center gap-1 group/item">
-                        <span className={`${!isIncluded ? 'line-through opacity-50' : ''} ${isNewToThisTier && tierIdx > 0 ? 'text-slate-900 font-black' : ''}`}>
+                        <span className={`${!isIncluded ? 'line-through opacity-50' : ''} ${isNewToThisTier && tierIdx > 0 ? 'text-slate-900 font-black' : ''} ${feature.alwaysIncluded ? 'text-cyan-700 font-black' : ''}`}>
                           {feature.name}
                         </span>
                         
@@ -290,7 +299,6 @@ const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
                               <Info className={`w-3.5 h-3.5 ${activeFeatureId === uniqueId ? 'text-cyan-500' : ''}`} />
                             </button>
 
-                            {/* Desktop Tooltip - anchored per specific icon instance */}
                             {!isMobile && activeFeatureId === uniqueId && (
                               <div 
                                 ref={desktopTooltipRef}
@@ -323,13 +331,11 @@ const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
           ))}
         </div>
 
-        {/* Small Note */}
         <p className="mt-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">
           All plans include premium support and our 30-day performance guarantee.
         </p>
       </div>
 
-      {/* Mobile Bottom Sheet */}
       {isMobile && activeFeatureId !== null && (() => {
         const [tIdx, fIdx] = activeFeatureId.split('-').map(Number);
         const feature = features[fIdx];
