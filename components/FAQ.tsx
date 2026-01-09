@@ -271,12 +271,6 @@ const FAQ: React.FC = () => {
               >
                 Get in Touch Now
               </a>
-              <a 
-                href="mailto:webcore112@gmail.com" 
-                className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-2xl font-black hover:bg-white/10 active:scale-95 transition-all"
-              >
-                Email Support
-              </a>
             </div>
           </div>
         </div>
