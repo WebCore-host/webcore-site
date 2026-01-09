@@ -58,6 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
         { label: 'About', tab: 'about' as const, href: '#about', delay: 'delay-[150ms]' },
         { label: 'Pricing', tab: 'pricing' as const, href: '#pricing', delay: 'delay-[200ms]' },
         { label: 'FAQ', tab: 'faq' as const, href: '#faq', delay: 'delay-[250ms]' },
+        { label: 'Testimonials', tab: 'testimonials' as const, href: '#testimonials', delay: 'delay-[300ms]' },
       ]
     : [
         { label: 'Home', tab: 'home' as const, href: '#', delay: 'delay-[100ms]' },
