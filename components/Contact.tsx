@@ -232,7 +232,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
                 >
                   <option value="" disabled>Select a plan...</option>
                   <option value="essential">Essential Plan — $97/mo</option>
-                  <option value="growth">Growth Plan — $197/mo</option>
+                  <option value="growth">Growth Plan — $275/mo</option>
                   <option value="pro">Pro Plan — $497/mo</option>
                   <option value="not_sure">I'm not sure yet / Let's talk</option>
                 </select>
