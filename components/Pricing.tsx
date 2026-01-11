@@ -122,7 +122,7 @@ const tiers = [
     name: "Growth",
     id: "growth",
     oldPrice: "349",
-    price: "197",
+    price: "275",
     icon: <Sparkles className="w-6 h-6 text-cyan-500" />,
     includedCount: 15,
     popular: true,
