@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NXRPMMB2');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebCore | Modern Web Solutions</title>
@@ -32,6 +40,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        scroll-behavior: smooth !important;
+      }
       body {
         font-family: 'Inter', sans-serif;
       }
@@ -65,10 +76,11 @@
 </script>
 </head>
   <body class="bg-slate-50 text-slate-900">
-    <!-- 
-      NETLIFY FORM HELPER 
-      This is invisible to users, but helps Netlify's build bot "find" your form.
-    -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXRPMMB2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
       <input type="text" name="business" />
@@ -77,11 +89,7 @@
       <input type="text" name="plan" />
       <textarea name="message"></textarea>
     </form>
-
-    <!-- This is where the website will be "injected" by React -->
     <div id="root"></div>
-
-    <!-- CRITICAL: This line below is the bridge. It tells the browser to run your code! -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
