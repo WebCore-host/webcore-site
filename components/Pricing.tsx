@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Check, X, Sparkles, Zap, ShieldCheck, Rocket, Info } from 'lucide-react';
 
@@ -112,7 +111,7 @@ const tiers = [
     name: "Essential",
     id: "essential",
     oldPrice: "209",
-    price: "79",
+    price: "59",
     icon: <ShieldCheck className="w-6 h-6 text-slate-400" />,
     includedCount: 7,
     popular: false,
