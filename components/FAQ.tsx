@@ -14,129 +14,134 @@ import {
   UserCheck,
   Mail,
   SearchCheck,
-  Code2
+  Code2,
+  Lock,
+  MapPin,
+  Plus,
+  Star,
+  Target,
+  Globe,
+  Sparkles
 } from 'lucide-react';
 
 interface FAQItem {
   id: number;
   question: string;
   answer: string;
-  category: 'General' | 'Process' | 'Technical' | 'Support';
+  category: 'Getting Started' | 'Pricing & Plans' | 'Maintenance & Updates' | 'Technical & Security' | 'Features & Integration';
   icon: React.ReactNode;
 }
 
 const faqData: FAQItem[] = [
+  // Getting Started
   {
     id: 1,
-    category: 'General',
-    icon: <HelpCircle className="w-5 h-5 text-cyan-500" />,
-    question: "What exactly does WebCore do for local businesses?",
-    answer: "We specialize in taking businesses with little to no online presence and turning them into digital leaders. We handle everything from custom design and coding to SEO and ongoing maintenance so you can focus on running your business. Basically, you get peace of mind online with us."
+    category: 'Getting Started',
+    icon: <Clock className="w-5 h-5 text-cyan-500" />,
+    question: "How long does it take to get my website live?",
+    answer: "We value speed. Our Essential Plan typically launches within 7 days, while our Growth Plan offers a priority 72-hour turnaround (from the moment we receive your content), ensuring your business starts reaching customers as quickly as possible."
   },
   {
     id: 2,
-    category: 'Process',
-    icon: <Zap className="w-5 h-5 text-amber-500" />,
-    question: "How long does it take to get my website live?",
-    answer: "We pride ourselves on \"Hyper Velocity.\" While a full custom build depends on the project scope, we typically deliver professional prototypes within days, not months. Most projects are completed within 2-4 weeks. If you need projects done quicker just contact our team and we’ll see what we can work out."
+    category: 'Getting Started',
+    icon: <Target className="w-5 h-5 text-amber-500" />,
+    question: "What do I need to provide to start the process?",
+    answer: "To hit the ground running, we’ll start with a 15-minute Strategy Call. You bring the vision. We’ll do all the technical heavy lifting so you can stay focused on your clients while we build the engine."
   },
   {
     id: 3,
-    category: 'Technical',
-    icon: <Code2 className="w-5 h-5 text-purple-500" />,
-    question: "Do you use website templates like Wix or Squarespace?",
-    answer: "No. We believe in \"Legacy Craftsmanship.\" Every site we build is hand-coded and custom-designed. This ensures your site is unique, faster, and more secure than template-based alternatives."
+    category: 'Getting Started',
+    icon: <Globe className="w-5 h-5 text-purple-500" />,
+    question: "Do I have to buy my own domain?",
+    answer: "No, we take care of that for you! WebCore maintains the domain registration to ensure it is always optimized and secure. Think of it like a \"managed lease\", we handle the paperwork and the costs so you can focus on your business. If you ever need to take full ownership later on, we can facilitate a transfer for a small administrative fee."
   },
+  // Pricing & Plans
   {
     id: 4,
-    category: 'Technical',
-    icon: <Smartphone className="w-5 h-5 text-emerald-500" />,
-    question: "Will my website work on mobile phones and tablets?",
-    answer: "Absolutely. Every WebCore site features Responsive Design, meaning it will look and function perfectly on everything from an iPhone to a 4K desktop monitor."
+    category: 'Pricing & Plans',
+    icon: <TrendingUp className="w-5 h-5 text-emerald-500" />,
+    question: "What is the difference between the Essential and Growth plans?",
+    answer: "The Essential Plan ($59/mo) is perfect for a professional launch with 3 pages. The Growth Plan ($69/mo) is built for businesses ready to scale, offering 6 pages, faster support, lead generation tools (like appointment booking), and monthly website enhancements."
   },
   {
     id: 5,
-    category: 'General',
-    icon: <TrendingUp className="w-5 h-5 text-blue-500" />,
-    question: "How does a website help my business grow?",
-    answer: "Statistics show that 70-80% of consumers research a company online before visiting in person. A professional website builds instant trust, influences purchasing decisions, and ensures you are \"discoverable\" when local customers search for your services."
+    category: 'Pricing & Plans',
+    icon: <ShieldCheck className="w-5 h-5 text-blue-500" />,
+    question: "Are there any hidden setup fees?",
+    answer: "No. Our goal is to provide total peace of mind. Your monthly subscription covers your website design, hosting, security, and ongoing support without surprise \"activation\" fees."
   },
   {
     id: 6,
-    category: 'General',
-    icon: <SearchCheck className="w-5 h-5 text-indigo-500" />,
-    question: "Is SEO (Search Engine Optimization) included?",
-    answer: "Yes, we offer SEO tailored to your business goals. Our Growth Plan includes a Foundational SEO Setup to get you started, while our Pro Plan features Advanced SEO, including structured data and schema markup for maximum visibility. Our Essential Plan is focused strictly on design and performance, making it a great fit for those who already have a dedicated marketing strategy."
+    category: 'Pricing & Plans',
+    icon: <Rocket className="w-5 h-5 text-indigo-500" />,
+    question: "Can I upgrade from Essential to Growth later?",
+    answer: "Absolutely. As your business grows and you need more features—like social media syncing or appointment scheduling—you can upgrade to the Growth Plan at any time."
   },
+  // Maintenance & Updates
   {
     id: 7,
-    category: 'General',
-    icon: <ShieldCheck className="w-5 h-5 text-rose-500" />,
-    question: "What is your \"Radical Transparency\" policy?",
-    answer: "It means no hidden fees and no technical jargon. We explain every decision we make and provide clear, upfront pricing so you are always in the driver’s seat of your project."
+    category: 'Maintenance & Updates',
+    icon: <Code2 className="w-5 h-5 text-rose-500" />,
+    question: "How do the \"3 Monthly Enhancements\" work in the Growth Plan?",
+    answer: "On the Growth Plan, you can contact us up to 3 times per month to request updates. This includes things like changing a photo, updating a price list, adding a new testimonial, or tweaking text. It’s like having a web developer on call!"
   },
   {
     id: 8,
-    category: 'Support',
-    icon: <UserCheck className="w-5 h-5 text-emerald-500" />,
-    question: "Do you offer any guarantees?",
-    answer: "Yes! We offer a 30-Day Money Back Guarantee. If you aren't satisfied with our progress or the direction of the project within the first month, we’ll make it right or refund your investment."
+    category: 'Maintenance & Updates',
+    icon: <Clock className="w-5 h-5 text-emerald-500" />,
+    question: "What happens if I don't use my 3 updates in a month?",
+    answer: "To keep our workflow predictable and your site fresh, updates do not roll over to the following month. We encourage you to use them to keep your content current!"
   },
   {
     id: 9,
-    category: 'Process',
-    icon: <Rocket className="w-5 h-5 text-cyan-600" />,
-    question: "What happens after the website is launched?",
-    answer: "We don’t just \"build and leave.\" We provide reliable ongoing support to ensure your site stays secure, updated, and performing at its best as your business grows."
+    category: 'Maintenance & Updates',
+    icon: <Plus className="w-5 h-5 text-cyan-600" />,
+    question: "What if I need more than 3 updates in a month?",
+    answer: "If you have a busy month with lots of changes, just reach out! We can provide a quick quote for additional edits beyond your monthly credits."
   },
+  // Technical & Security
   {
     id: 10,
-    category: 'Support',
-    icon: <Clock className="w-5 h-5 text-amber-600" />,
-    question: "What happens if I need to change a phone number or add a new service later?",
-    answer: "We believe a website should grow with your business. All of our plans include a streamlined process for updates. Whether you want to swap out a photo, update your pricing, or add a new testimonial, just send us a quick message. We handle the edits for you to ensure your site stays professional and error-free, usually within one business day."
+    category: 'Technical & Security',
+    icon: <Smartphone className="w-5 h-5 text-amber-600" />,
+    question: "Will my website work on mobile phones?",
+    answer: "Yes. Every site we build is \"Mobile-Optimized,\" meaning it will look and function perfectly on smartphones, tablets, and desktop computers."
   },
   {
     id: 11,
-    category: 'Support',
-    icon: <Cpu className="w-5 h-5 text-slate-500" />,
-    question: "How fast can I expect a response if I have a question?",
-    answer: "We prioritize clear, fast communication. While we guarantee a response within 24 hours for all clients, those on our Growth Plan enjoy an accelerated response time of under 12 hours. For our Pro Plan partners, we provide Priority Support with a dedicated response window of less than 2 hours."
+    category: 'Technical & Security',
+    icon: <Lock className="w-5 h-5 text-slate-500" />,
+    question: "Is my website secure?",
+    answer: "Security is included in every plan. We install an SSL Security Certificate (the \"lock\" icon in the browser) to ensure your data and your visitors' information are encrypted and safe."
   },
   {
     id: 12,
-    category: 'Process',
-    icon: <Search className="w-5 h-5 text-purple-600" />,
-    question: "Can you help me if I already have a website but it’s outdated?",
-    answer: "Definitely. We can perform a digital audit and either refresh your current look or build a high-performance \"engine\" from the ground up to replace an underperforming site."
+    category: 'Technical & Security',
+    icon: <UserCheck className="w-5 h-5 text-purple-600" />,
+    question: "What kind of support do you offer?",
+    answer: "We offer dedicated email support. Essential Plan members receive a response within 48 hours, while Growth Plan members get VIP Priority Support with a response in under 12 hours."
   },
+  // Features & Integration
   {
     id: 13,
-    category: 'Technical',
-    icon: <ShieldCheck className="w-5 h-5 text-cyan-500" />,
-    question: "Do you handle website hosting and security?",
-    answer: "Yes. We provide total peace of mind by managing the technical heavy lifting, including high-speed hosting and SSL security certificates to keep your visitor's data safe."
+    category: 'Features & Integration',
+    icon: <MapPin className="w-5 h-5 text-cyan-500" />,
+    question: "Can you help me show up on Google Maps?",
+    answer: "Yes! Our Growth Plan includes Google Maps integration, making it easy for local customers to find your physical location directly from your website."
   },
   {
     id: 14,
-    category: 'General',
-    icon: <Rocket className="w-5 h-5 text-orange-500" />,
-    question: "Why should I choose WebCore over a cheap DIY builder?",
-    answer: "DIY builders often produce slow, generic sites that struggle with SEO. WebCore builds \"business engines\" designed specifically to drive calls and revenue through custom UI/UX and lightning-fast load times."
+    category: 'Features & Integration',
+    icon: <Zap className="w-5 h-5 text-orange-500" />,
+    question: "Can customers book appointments through the site?",
+    answer: "Yes, this is a core feature of our Growth Plan. We integrate automated scheduling tools so your customers can book your services 24/7 without you having to pick up the phone."
   },
   {
     id: 15,
-    category: 'General',
-    icon: <Mail className="w-5 h-5 text-cyan-400" />,
-    question: "How do I get started?",
-    answer: "Simply fill out our contact form below or email us at webcore112@gmail.com. We’ll reach out to discuss your goals and provide a custom strategy for your digital launchpad."
-  },
-  {
-    id: 16,
-    category: 'Technical',
-    icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
-    question: "Who owns and manages the website?",
-    answer: "We provide a Fully Managed Digital Solution. This means while you own your brand, content, and domain, we provide the high-performance hosting environment and the proprietary code that keeps your site running at peak speed. By hosting the site on our optimized servers, we ensure your business stays secure, updated, and online 24/7. You focus on your business; we handle the technical infrastructure."
+    category: 'Features & Integration',
+    icon: <Star className="w-5 h-5 text-blue-600" />,
+    question: "Can I show reviews from my happy customers?",
+    answer: "Definitely. The Growth Plan includes a \"Positive Review Banner\" specifically designed to showcase your best feedback and build instant trust with new visitors."
   }
 ];
 
@@ -151,7 +156,13 @@ const FAQ: React.FC = () => {
     );
   }, [searchQuery]);
 
-  const categories = ['General', 'Process', 'Technical', 'Support'] as const;
+  const categories = [
+    'Getting Started', 
+    'Pricing & Plans', 
+    'Maintenance & Updates', 
+    'Technical & Security', 
+    'Features & Integration'
+  ] as const;
 
   return (
     <section className="pt-32 pb-24 bg-white relative overflow-hidden">
@@ -191,7 +202,7 @@ const FAQ: React.FC = () => {
             return (
               <div key={cat} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-6 flex items-center gap-4">
-                  <span className="shrink-0">{cat} Questions</span>
+                  <span className="shrink-0">{cat}</span>
                   <div className="h-px bg-slate-100 flex-1"></div>
                 </h3>
                 
