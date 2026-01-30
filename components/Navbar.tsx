@@ -4,8 +4,8 @@ import Logo from './Logo';
 import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
-  activeTab?: 'home' | 'about' | 'pricing' | 'faq' | 'testimonials';
-  setActiveTab?: (tab: 'home' | 'about' | 'pricing' | 'faq' | 'testimonials') => void;
+  activeTab?: 'home' | 'about' | 'pricing' | 'faq';
+  setActiveTab?: (tab: 'home' | 'about' | 'pricing' | 'faq', anchor?: string) => void;
   isMobile?: boolean;
 }
 
@@ -40,12 +40,21 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
     document.body.style.overflow = 'unset';
   };
 
-  const handleNavClick = (e: React.MouseEvent, tab: 'home' | 'about' | 'pricing' | 'faq' | 'testimonials', href: string) => {
+  const handleNavClick = (e: React.MouseEvent, tab: 'home' | 'about' | 'pricing' | 'faq', href: string) => {
+    const anchor = href.includes('#') ? href.split('#')[1] : undefined;
+    
     if (setActiveTab) {
       e.preventDefault();
-      setActiveTab(tab);
+      setActiveTab(tab, anchor);
       closeMenu();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // If we are already on the correct tab and there's an anchor, pan to it
+      if (activeTab === tab && anchor) {
+        const element = document.getElementById(anchor);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     } else {
       closeMenu();
     }
@@ -58,12 +67,10 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
         { label: 'About', tab: 'about' as const, href: '#about', delay: 'delay-[150ms]' },
         { label: 'Pricing', tab: 'pricing' as const, href: '#pricing', delay: 'delay-[200ms]' },
         { label: 'FAQ', tab: 'faq' as const, href: '#faq', delay: 'delay-[250ms]' },
-        { label: 'Testimonials', tab: 'testimonials' as const, href: '#testimonials', delay: 'delay-[300ms]' },
       ]
     : [
         { label: 'Home', tab: 'home' as const, href: '#', delay: 'delay-[100ms]' },
         { label: 'FAQ', tab: 'faq' as const, href: '#faq', delay: 'delay-[150ms]' },
-        { label: 'Testimonials', tab: 'testimonials' as const, href: '#testimonials', delay: 'delay-[200ms]' },
       ];
 
   return (
@@ -91,15 +98,15 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
               {/* Desktop Secondary Links - Only visible on Home page */}
               {activeTab === 'home' && (
                 <div className="hidden md:flex items-center gap-10 mr-4">
-                  <a href="#stats" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Impact</a>
-                  <a href="#services" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Services</a>
-                  <a href="#about" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">About</a>
-                  <a href="#pricing" className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Pricing</a>
+                  <a href="#stats" onClick={(e) => handleNavClick(e, 'home', '#stats')} className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Impact</a>
+                  <a href="#services" onClick={(e) => handleNavClick(e, 'home', '#services')} className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Services</a>
+                  <a href="#about" onClick={(e) => handleNavClick(e, isMobile ? 'about' : 'home', '#about')} className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">About</a>
+                  <a href="#pricing" onClick={(e) => handleNavClick(e, isMobile ? 'pricing' : 'home', '#pricing')} className="text-slate-600 hover:text-slate-900 font-bold text-[13px] uppercase tracking-wider transition-colors">Pricing</a>
                 </div>
               )}
 
               {/* Main CTA - Always Visible */}
-              <a href="#contact" className="gradient-bg text-white px-5 md:px-8 py-2.5 md:py-3 rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest hover:shadow-2xl hover:shadow-cyan-200 transition-all active:scale-95">
+              <a href="#contact" onClick={(e) => handleNavClick(e, activeTab || 'home', '#contact')} className="gradient-bg text-white px-5 md:px-8 py-2.5 md:py-3 rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest hover:shadow-2xl hover:shadow-cyan-200 transition-all active:scale-95">
                 Take the next step
               </a>
 
@@ -149,7 +156,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
             } delay-[250ms]`}>
               <a 
                 href="#contact" 
-                onClick={closeMenu}
+                onClick={(e) => handleNavClick(e, activeTab || 'home', '#contact')}
                 className="gradient-bg text-white w-full py-6 rounded-2xl font-black text-xl md:text-2xl text-center flex items-center justify-center shadow-2xl shadow-cyan-200 active:scale-95 transition-all"
               >
                 Let's talk business
