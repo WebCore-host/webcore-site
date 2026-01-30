@@ -108,9 +108,9 @@ const App: React.FC = () => {
             </>
           );
         case 'about':
-          return <div id="about"><About /></div>;
+          return <div id="about" className="pt-20"><About /></div>;
         case 'pricing':
-          return <div id="pricing"><Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} /></div>;
+          return <div id="pricing" className="pt-20"><Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} /></div>;
         case 'faq':
           return <FAQ />;
         default:
