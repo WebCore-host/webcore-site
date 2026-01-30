@@ -12,14 +12,14 @@ import DeploymentGuide from './components/DeploymentGuide';
 import FloatingCTA from './components/FloatingCTA';
 import LoadingScreen from './components/LoadingScreen';
 import FAQ from './components/FAQ';
-import Testimonials from './components/Testimonials';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'home' | 'about' | 'pricing' | 'faq' | 'testimonials'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'about' | 'pricing' | 'faq'>('home');
   const [isMobile, setIsMobile] = useState(false);
   const [pricingModalPlan, setPricingModalPlan] = useState<string | null>(null);
+  const [pendingAnchor, setPendingAnchor] = useState<string | null>(null);
 
   useEffect(() => {
     let minTimerFinished = false;
@@ -65,6 +65,36 @@ const App: React.FC = () => {
     };
   }, []);
 
+  // Effect to handle scrolling after a tab change
+  useEffect(() => {
+    if (pendingAnchor) {
+      const element = document.getElementById(pendingAnchor);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setPendingAnchor(null);
+      } else {
+        // If element not yet in DOM, wait a tiny bit and try again
+        const timer = setTimeout(() => {
+          const el = document.getElementById(pendingAnchor);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+            setPendingAnchor(null);
+          }
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [activeTab, pendingAnchor]);
+
+  const handleTabChange = (tab: 'home' | 'about' | 'pricing' | 'faq', anchor?: string) => {
+    setActiveTab(tab);
+    if (anchor) {
+      setPendingAnchor(anchor);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const renderContent = () => {
     // MOBILE VIEW
     if (isMobile) {
@@ -73,24 +103,22 @@ const App: React.FC = () => {
           return (
             <>
               <Hero />
-              <StatsMarquee />
-              <Services />
+              <div id="stats"><StatsMarquee /></div>
+              <div id="services"><Services /></div>
             </>
           );
         case 'about':
-          return <About />;
+          return <div id="about"><About /></div>;
         case 'pricing':
-          return <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />;
+          return <div id="pricing"><Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} /></div>;
         case 'faq':
           return <FAQ />;
-        case 'testimonials':
-          return <Testimonials />;
         default:
           return (
             <>
               <Hero />
-              <StatsMarquee />
-              <Services />
+              <div id="stats"><StatsMarquee /></div>
+              <div id="services"><Services /></div>
             </>
           );
       }
@@ -101,16 +129,13 @@ const App: React.FC = () => {
       if (activeTab === 'faq') {
         return <FAQ />;
       }
-      if (activeTab === 'testimonials') {
-        return <Testimonials />;
-      }
       return (
         <>
           <Hero />
-          <StatsMarquee />
-          <Services />
-          <About />
-          <Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} />
+          <div id="stats"><StatsMarquee /></div>
+          <div id="services"><Services /></div>
+          <div id="about"><About /></div>
+          <div id="pricing"><Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} /></div>
         </>
       );
     }
@@ -120,16 +145,16 @@ const App: React.FC = () => {
     <div className="relative min-h-screen bg-white">
       <LoadingScreen isLoading={isLoading} />
 
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isMobile={isMobile} />
+      <Navbar activeTab={activeTab} setActiveTab={handleTabChange} isMobile={isMobile} />
 
       <div className={`transition-all duration-700 ${isLoading ? 'blur-md scale-95 opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           <div key={`${activeTab}-${isMobile}`} className="animate-in fade-in duration-700">
             {renderContent()}
           </div>
-          <Contact />
+          <div id="contact"><Contact /></div>
         </main>
-        <Footer setActiveTab={setActiveTab} isMobile={isMobile} />
+        <Footer setActiveTab={handleTabChange} isMobile={isMobile} />
       </div>
 
       {pricingModalPlan && (
