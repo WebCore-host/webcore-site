@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Send, Mail, MessageSquare, CheckCircle2, ChevronDown, X } from 'lucide-react';
 
@@ -13,7 +12,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phone, setPhone] = useState('');
   
-  // States for handling smooth entry and exit transitions
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -21,7 +19,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     if (isModal) {
       setSubmitted(false);
       setPhone('');
-      // Trigger entry animation on next frame
       const timer = setTimeout(() => setIsVisible(true), 10);
       return () => clearTimeout(timer);
     }
@@ -47,7 +44,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   const startCloseSequence = () => {
     if (!isModal) return;
     setIsClosing(true);
-    // Wait for the 600ms animation to complete before calling parent onClose
     setTimeout(() => {
       onClose?.();
     }, 600);
@@ -87,7 +83,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   const content = (
     <div className={`bg-slate-950 rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row border border-slate-800 relative ${isModal ? 'max-w-6xl w-full pointer-events-auto' : ''} ${modalAnimationClasses}`}>
       
-      {/* Close Button for Modal */}
       {isModal && (
         <button 
           onClick={startCloseSequence}
@@ -98,7 +93,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
         </button>
       )}
 
-      {/* INFO PANEL */}
       <div className="p-8 lg:p-14 lg:w-5/12 text-white bg-gradient-to-br from-slate-900 to-slate-950 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] -mr-32 -mt-32"></div>
         
@@ -133,7 +127,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
         </div>
       </div>
       
-      {/* FORM PANEL */}
       <div className="p-8 lg:p-12 lg:w-7/12 bg-white flex flex-col justify-center">
         {submitted ? (
           <div className="h-full flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -220,7 +213,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
 
             <div className="group relative">
               <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">
-                {isModal ? "The plan your interested in." : "What plan interested you?"}
+                {isModal ? "The plan you're interested in." : "What plan interested you?"}
               </label>
               <div className="relative">
                 <select 
@@ -231,9 +224,8 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
                   className={`w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base appearance-none pr-10 ${isModal && !!initialPlan ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
                 >
                   <option value="" disabled>Select a plan...</option>
-                  <option value="essential">Essential Plan — $97/mo</option>
-                  <option value="growth">Growth Plan — $275/mo</option>
-                  <option value="pro">Pro Plan — $497/mo</option>
+                  <option value="essential">Essential Plan — $59/mo</option>
+                  <option value="growth">The Growth Plan — $69/mo</option>
                   <option value="not_sure">I'm not sure yet / Let's talk</option>
                 </select>
                 {!isModal && (
@@ -250,7 +242,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
                 rows={2} 
                 required 
                 className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300 resize-none" 
-                placeholder="I've been in business for 20 years but want a professional and sleek website..."
+                placeholder="Tell us about your project goals..."
               ></textarea>
             </div>
             
