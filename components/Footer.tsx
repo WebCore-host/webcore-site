@@ -3,7 +3,7 @@ import React from 'react';
 import Logo from './Logo';
 
 interface FooterProps {
-  setActiveTab?: (tab: 'home' | 'about' | 'pricing' | 'faq' | 'testimonials') => void;
+  setActiveTab?: (tab: 'home' | 'about' | 'pricing' | 'faq', anchor?: string) => void;
   isMobile?: boolean;
 }
 
@@ -12,20 +12,18 @@ const Footer: React.FC<FooterProps> = ({ setActiveTab, isMobile }) => {
     window.dispatchEvent(new CustomEvent('open-deployment-guide'));
   };
 
-  const handleLinkClick = (e: React.MouseEvent, targetTab: 'home' | 'about' | 'pricing', anchorId: string) => {
+  const handleLinkClick = (e: React.MouseEvent, targetTab: 'home' | 'about' | 'pricing' | 'faq', anchorId: string) => {
     if (setActiveTab) {
       e.preventDefault();
-      setActiveTab(targetTab);
+      setActiveTab(targetTab, anchorId);
       
-      // Delay to ensure DOM is ready if we just switched tabs
-      setTimeout(() => {
-        const element = document.getElementById(anchorId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else if (anchorId === 'top') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 100);
+      // If we're already on that page, scroll directly
+      const element = document.getElementById(anchorId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else if (anchorId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
