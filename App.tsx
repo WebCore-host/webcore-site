@@ -12,6 +12,8 @@ import DeploymentGuide from './components/DeploymentGuide';
 import FloatingCTA from './components/FloatingCTA';
 import LoadingScreen from './components/LoadingScreen';
 import FAQ from './components/FAQ';
+import Projects from './components/Projects';
+import Testimonials from './components/Testimonials';
 
 const App: React.FC = () => {
   const [showGuide, setShowGuide] = useState(false);
@@ -73,7 +75,6 @@ const App: React.FC = () => {
         element.scrollIntoView({ behavior: 'smooth' });
         setPendingAnchor(null);
       } else {
-        // If element not yet in DOM, wait a tiny bit and try again
         const timer = setTimeout(() => {
           const el = document.getElementById(pendingAnchor);
           if (el) {
@@ -105,6 +106,8 @@ const App: React.FC = () => {
               <Hero />
               <div id="stats"><StatsMarquee /></div>
               <div id="services"><Services /></div>
+              <Projects />
+              <Testimonials />
             </>
           );
         case 'about':
@@ -134,6 +137,8 @@ const App: React.FC = () => {
           <Hero />
           <div id="stats"><StatsMarquee /></div>
           <div id="services"><Services /></div>
+          <Projects />
+          <Testimonials />
           <div id="about"><About /></div>
           <div id="pricing"><Pricing onPlanSelect={(plan) => setPricingModalPlan(plan)} /></div>
         </>
