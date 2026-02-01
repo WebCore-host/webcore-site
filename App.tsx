@@ -67,7 +67,6 @@ const App: React.FC = () => {
     };
   }, []);
 
-  // Effect to handle scrolling after a tab change
   useEffect(() => {
     if (pendingAnchor) {
       const element = document.getElementById(pendingAnchor);
@@ -97,7 +96,6 @@ const App: React.FC = () => {
   };
 
   const renderContent = () => {
-    // MOBILE VIEW
     if (isMobile) {
       switch (activeTab) {
         case 'home':
@@ -125,10 +123,7 @@ const App: React.FC = () => {
             </>
           );
       }
-    } 
-    
-    // DESKTOP/TABLET VIEW
-    else {
+    } else {
       if (activeTab === 'faq') {
         return <FAQ />;
       }
@@ -149,9 +144,7 @@ const App: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-white">
       <LoadingScreen isLoading={isLoading} />
-
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} isMobile={isMobile} />
-
       <div className={`transition-all duration-700 ${isLoading ? 'blur-md scale-95 opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
         <main>
           <div key={`${activeTab}-${isMobile}`} className="animate-in fade-in duration-700">
@@ -161,17 +154,10 @@ const App: React.FC = () => {
         </main>
         <Footer setActiveTab={handleTabChange} isMobile={isMobile} />
       </div>
-
       {pricingModalPlan && (
-        <Contact 
-          isModal 
-          initialPlan={pricingModalPlan} 
-          onClose={() => setPricingModalPlan(null)} 
-        />
+        <Contact isModal initialPlan={pricingModalPlan} onClose={() => setPricingModalPlan(null)} />
       )}
-
       <FloatingCTA />
-
       {showGuide && <DeploymentGuide onClose={() => setShowGuide(false)} />}
     </div>
   );
