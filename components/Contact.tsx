@@ -168,7 +168,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             </div>
             <h3 className="text-2xl font-black text-slate-900 mb-3">Request Received!</h3>
             <p className="text-slate-600 text-base max-w-sm mx-auto mb-8">
-              Your message has been sent. Check your email for a confirmation soon.
+              Your message has been sent. Our team will be in contact soon.
             </p>
             <button 
               onClick={isModal ? startCloseSequence : () => setSubmitted(false)}
