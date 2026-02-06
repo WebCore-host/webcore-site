@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Send, Mail, MessageSquare, CheckCircle2, ChevronDown, X } from 'lucide-react';
 
@@ -49,27 +50,35 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     }, 600);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString(),
-    })
-      .then(() => {
-        setSubmitted(true);
-        setIsSubmitting(false);
-        setPhone('');
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("There was an error. If you are running this locally, the form won't send until you deploy to Netlify!");
-        setIsSubmitting(false);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/webcore112@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(data),
       });
+
+      const result = await response.json();
+      if (result.success === "true") {
+        setSubmitted(true);
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error sending message. Please email webcore112@gmail.com directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const modalAnimationClasses = isModal 
@@ -137,129 +146,63 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             <p className="text-slate-600 text-base max-w-sm mx-auto mb-8">
               Your message has been sent. Check your email for a confirmation soon.
             </p>
-            {isModal ? (
-              <button 
-                onClick={startCloseSequence}
-                className="px-8 py-3 rounded-xl gradient-bg text-white font-black shadow-xl hover:opacity-90 transition-all"
-              >
-                Close Preview
-              </button>
-            ) : (
-              <button 
-                onClick={() => setSubmitted(false)}
-                className="px-8 py-3 rounded-xl border-2 border-slate-100 font-bold text-slate-500 hover:bg-slate-50 transition-all"
-              >
-                Send another request
-              </button>
-            )}
+            <button 
+              onClick={isModal ? startCloseSequence : () => setSubmitted(false)}
+              className="px-8 py-3 rounded-xl gradient-bg text-white font-black shadow-xl"
+            >
+              {isModal ? 'Close Preview' : 'Send Another'}
+            </button>
           </div>
         ) : (
-          <form 
-            name="contact" 
-            method="POST" 
-            data-netlify="true" 
-            onSubmit={handleSubmit} 
-            className="space-y-4 md:space-y-6"
-          >
-            <input type="hidden" name="form-name" value="contact" />
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <input type="hidden" name="_subject" value="New WebCore Inquiry!" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="text" name="_honey" style={{ display: 'none' }} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Your Full Name</label>
-                <input 
-                  name="name"
-                  type="text" 
-                  required 
-                  className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" 
-                  placeholder="Jane Smith" 
-                />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Your Full Name</label>
+                <input name="name" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="Jane Smith" />
               </div>
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Business Name</label>
-                <input 
-                  name="business"
-                  type="text" 
-                  required 
-                  className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" 
-                  placeholder="Smith's Hardware" 
-                />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Business Name</label>
+                <input name="business" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="Smith's Hardware" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Email Address</label>
-                <input 
-                  name="email"
-                  type="email" 
-                  required 
-                  className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" 
-                  placeholder="jane@smithshardware.com" 
-                />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Email Address</label>
+                <input name="email" type="email" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="jane@email.com" />
               </div>
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Phone Number</label>
-                <input 
-                  name="phone"
-                  type="tel" 
-                  required 
-                  value={phone}
-                  onChange={handlePhoneChange}
-                  className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" 
-                  placeholder="(555) 000-0000" 
-                />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Phone Number</label>
+                <input name="phone" type="tel" required value={phone} onChange={handlePhoneChange} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="(555) 000-0000" />
               </div>
             </div>
 
-            <div className="group relative">
-              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">
-                {isModal ? "The plan you're interested in." : "What plan interested you?"}
-              </label>
+            <div className="group">
+              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Interested Plan</label>
               <div className="relative">
-                <select 
-                  name="plan"
-                  required
-                  defaultValue={initialPlan || ""}
-                  disabled={isModal && !!initialPlan}
-                  className={`w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base appearance-none pr-10 ${isModal && !!initialPlan ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
-                >
+                <select name="plan" required defaultValue={initialPlan || ""} disabled={isModal && !!initialPlan} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all appearance-none pr-10">
                   <option value="" disabled>Select a plan...</option>
                   <option value="essential">Essential Plan — $59/mo</option>
                   <option value="growth">The Growth Plan — $69/mo</option>
-                  <option value="not_sure">I'm not sure yet / Let's talk</option>
+                  <option value="not_sure">I'm not sure yet</option>
                 </select>
-                {!isModal && (
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                )}
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 {isModal && initialPlan && <input type="hidden" name="plan" value={initialPlan} />}
               </div>
             </div>
             
             <div className="group">
-              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">What can we help you achieve?</label>
-              <textarea 
-                name="message"
-                rows={2} 
-                required 
-                className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300 resize-none" 
-                placeholder="Tell us about your project goals..."
-              ></textarea>
+              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Project Goals</label>
+              <textarea name="message" rows={2} required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all resize-none" placeholder="How can we help you achieve peace of mind online?"></textarea>
             </div>
             
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className={`w-full gradient-bg text-white font-black text-base md:text-lg py-4 px-6 md:px-8 rounded-xl shadow-2xl shadow-cyan-100 flex items-center justify-center gap-2 md:gap-3 transition-all group ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:opacity-95 hover:scale-[0.99] active:scale-95'}`}
-            >
-              {isSubmitting ? (
-                'Sending...'
-              ) : (
-                <>
-                  <span className="hidden md:inline">Take the next step to my website</span>
-                  <span className="md:hidden">Take the next step</span>
-                </>
-              )}
-              {!isSubmitting && <Send className="w-4 h-4 md:w-5 h-5 group-hover:rotate-12 transition-transform shrink-0" />}
+            <button type="submit" disabled={isSubmitting} className={`w-full gradient-bg text-white font-black py-4 rounded-xl shadow-2xl transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:scale-[0.99] active:scale-95'}`}>
+              {isSubmitting ? 'Sending...' : 'Take the next step to my website'}
+              {!isSubmitting && <Send className="w-5 h-5" />}
             </button>
           </form>
         )}
@@ -267,28 +210,13 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     </div>
   );
 
-  if (isModal) {
-    return (
-      <div 
-        className={`fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md pointer-events-auto overflow-y-auto px-4 py-6 md:p-8 flex justify-center items-start md:items-center transition-opacity duration-[600ms] ${
-          isVisible && !isClosing ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) startCloseSequence();
-        }}
-      >
-        <div className="w-full max-w-6xl my-auto">
-          {content}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <section id="contact" className="py-10 md:py-16 bg-white relative overflow-hidden scroll-mt-2">
-      <div className="max-w-7xl mx-auto px-4">
-        {content}
-      </div>
+  return isModal ? (
+    <div className={`fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-md overflow-y-auto px-4 py-6 flex justify-center items-center transition-opacity duration-[600ms] ${isVisible && !isClosing ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.target === e.currentTarget && startCloseSequence()}>
+      <div className="w-full max-w-6xl my-auto">{content}</div>
+    </div>
+  ) : (
+    <section id="contact" className="py-16 bg-white scroll-mt-2 px-4">
+      <div className="max-w-7xl mx-auto">{content}</div>
     </section>
   );
 };
