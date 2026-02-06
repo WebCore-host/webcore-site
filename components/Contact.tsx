@@ -54,28 +54,54 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     e.preventDefault();
     setIsSubmitting(true);
     
+    // --- EMAILJS CONFIGURATION (VERIFIED) ---
+    const SERVICE_ID = "service_44qh385";
+    const TEMPLATE_ID = "template_3opp22e";
+    const PUBLIC_KEY = "SG4WeKfWxYcNug6zcY";
+    
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const formValues = Object.fromEntries(formData.entries());
+
+    // Map the internal value to a readable label for the email
+    const planLabels: Record<string, string> = {
+      essential: "Essential Plan ($59/mo)",
+      growth: "Growth Plan ($69/mo)",
+      not_sure: "Not Sure Yet"
+    };
+
+    const templateParams = {
+      name: formValues.name,
+      email: formValues.email,
+      business: formValues.business,
+      phone: formValues.phone,
+      plan: planLabels[formValues.plan as string] || formValues.plan,
+      message: formValues.message,
+    };
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/webcore112@gmail.com", {
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
         headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          service_id: SERVICE_ID,
+          template_id: TEMPLATE_ID,
+          user_id: PUBLIC_KEY,
+          template_params: templateParams
+        }),
       });
 
-      const result = await response.json();
-      if (result.success === "true") {
+      if (response.ok) {
         setSubmitted(true);
+        setPhone('');
       } else {
-        throw new Error("Form submission failed");
+        const errorText = await response.text();
+        throw new Error(`EmailJS Error: ${errorText}`);
       }
     } catch (error) {
-      console.error(error);
-      alert("Error sending message. Please email webcore112@gmail.com directly.");
+      console.error("Submission error:", error);
+      alert("Submission error. Please check your internet connection or email webcore112@gmail.com directly.");
     } finally {
       setIsSubmitting(false);
     }
@@ -148,43 +174,39 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             </p>
             <button 
               onClick={isModal ? startCloseSequence : () => setSubmitted(false)}
-              className="px-8 py-3 rounded-xl gradient-bg text-white font-black shadow-xl"
+              className="px-8 py-3 rounded-xl gradient-bg text-white font-black shadow-xl hover:opacity-90 transition-all active:scale-95"
             >
-              {isModal ? 'Close Preview' : 'Send Another'}
+              {isModal ? 'Close Preview' : 'Send Another Request'}
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-            <input type="hidden" name="_subject" value="New WebCore Inquiry!" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="text" name="_honey" style={{ display: 'none' }} />
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Your Full Name</label>
-                <input name="name" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="Jane Smith" />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Your Full Name</label>
+                <input name="name" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" placeholder="Jane Smith" />
               </div>
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Business Name</label>
-                <input name="business" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="Smith's Hardware" />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Business Name</label>
+                <input name="business" type="text" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" placeholder="Smith's Hardware" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Email Address</label>
-                <input name="email" type="email" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="jane@email.com" />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Email Address</label>
+                <input name="email" type="email" required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" placeholder="jane@smithshardware.com" />
               </div>
               <div className="group">
-                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Phone Number</label>
-                <input name="phone" type="tel" required value={phone} onChange={handlePhoneChange} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all" placeholder="(555) 000-0000" />
+                <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Phone Number</label>
+                <input name="phone" type="tel" required value={phone} onChange={handlePhoneChange} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300" placeholder="(555) 000-0000" />
               </div>
             </div>
 
             <div className="group">
-              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Interested Plan</label>
+              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Interested Plan</label>
               <div className="relative">
-                <select name="plan" required defaultValue={initialPlan || ""} disabled={isModal && !!initialPlan} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all appearance-none pr-10">
+                <select name="plan" required defaultValue={initialPlan || ""} disabled={isModal && !!initialPlan} className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base appearance-none pr-10">
                   <option value="" disabled>Select a plan...</option>
                   <option value="essential">Essential Plan — $59/mo</option>
                   <option value="growth">The Growth Plan — $69/mo</option>
@@ -196,13 +218,13 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
             </div>
             
             <div className="group">
-              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider">Project Goals</label>
-              <textarea name="message" rows={2} required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all resize-none" placeholder="How can we help you achieve peace of mind online?"></textarea>
+              <label className="block text-[10px] font-black text-slate-900 mb-2 uppercase tracking-wider transition-colors group-focus-within:text-cyan-500">Project Goals</label>
+              <textarea name="message" rows={2} required className="w-full px-5 py-3 rounded-xl border-2 border-slate-50 bg-slate-50 focus:bg-white focus:border-cyan-400 focus:outline-none transition-all text-slate-900 font-medium text-base placeholder:text-slate-300 resize-none" placeholder="How can we help you achieve peace of mind online?"></textarea>
             </div>
             
-            <button type="submit" disabled={isSubmitting} className={`w-full gradient-bg text-white font-black py-4 rounded-xl shadow-2xl transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:scale-[0.99] active:scale-95'}`}>
-              {isSubmitting ? 'Sending...' : 'Take the next step to my website'}
-              {!isSubmitting && <Send className="w-5 h-5" />}
+            <button type="submit" disabled={isSubmitting} className={`w-full gradient-bg text-white font-black text-base md:text-lg py-4 px-6 md:px-8 rounded-xl shadow-2xl transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-50 cursor-wait' : 'hover:opacity-95 hover:scale-[0.99] active:scale-95'}`}>
+              {isSubmitting ? 'Sending Request...' : 'Take the next step to my website'}
+              {!isSubmitting && <Send className="w-4 h-4 md:w-5 h-5 shrink-0" />}
             </button>
           </form>
         )}
@@ -215,7 +237,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       <div className="w-full max-w-6xl my-auto">{content}</div>
     </div>
   ) : (
-    <section id="contact" className="py-16 bg-white scroll-mt-2 px-4">
+    <section id="contact" className="py-16 bg-white scroll-mt-2 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">{content}</div>
     </section>
   );
