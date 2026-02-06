@@ -21,10 +21,11 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkMobile = () => window.innerWidth < 768;
+    setIsMobile(checkMobile());
+    const handleResize = () => setIsMobile(checkMobile());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const tiers: Tier[] = [
@@ -39,7 +40,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       icon: <Shield className="w-6 h-6 text-slate-400" />,
       features: [
         { included: true, label: <span><strong>Tailormade 3-Page Website</strong> (Home, About, Contact)</span> },
-        { included: true, label: <span><strong>Rapid 7-Day Launch</strong> (Get online in one week)</span> },
+        { included: true, label: <span><strong>Rapid 2-Week Launch</strong> (Get online in two weeks)</span> },
         { included: true, label: <span><strong>Mobile-Optimized Design</strong> (Looks great on phones too)</span> },
         { included: true, label: <span><strong>Custom Domain Setup & Management</strong></span> },
         { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
@@ -66,7 +67,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       icon: <Zap className="w-6 h-6 text-cyan-500" />,
       features: [
         { included: true, label: <span><strong>Tailormade 6-Page Website</strong> (Home, About, Contact +3 of your choosing)</span> },
-        { included: true, label: <span><strong>Priority 72-Hour Launch</strong> (Skip the queue)</span> },
+        { included: true, label: <span><strong>Priority 7-Day Launch</strong> (Skip the queue)</span> },
         { included: true, label: <span><strong>Mobile-Optimized Design</strong> (Looks great on phones too)</span> },
         { included: true, label: <span><strong>Custom Domain Setup & Management</strong></span> },
         { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
