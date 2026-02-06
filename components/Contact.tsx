@@ -54,15 +54,13 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     e.preventDefault();
     setIsSubmitting(true);
     
-    // --- EMAILJS CONFIGURATION (VERIFIED) ---
     const SERVICE_ID = "service_44qh385";
     const TEMPLATE_ID = "template_3opp22e";
-    const PUBLIC_KEY = "SG4WeKfWxYcNug6zcY";
+    const PUBLIC_KEY = "SG4WeKfWxYcNug6zc";
     
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-    // Map the internal value to a readable label for the email
     const planLabels: Record<string, string> = {
       essential: "Essential Plan ($59/mo)",
       growth: "Growth Plan ($69/mo)",
