@@ -7,9 +7,7 @@ import {
   CheckCircle,
   Zap,
   Mail,
-  Smartphone,
   Search,
-  ExternalLink,
   Settings,
   Bell,
   Send,
@@ -27,59 +25,59 @@ interface Step {
   visual?: React.ReactNode;
 }
 
-const TokenVisual = () => (
+const EmailJSVisual = () => (
   <div className="bg-slate-900 rounded-3xl p-6 border border-slate-700 font-mono text-[11px] space-y-4 shadow-2xl">
-    <div className="flex items-center gap-2 text-amber-400 mb-4">
-      <Key className="w-4 h-4" /> <span className="font-black uppercase tracking-widest">API Authentication</span>
+    <div className="flex items-center gap-2 text-cyan-400 mb-4">
+      <Mail className="w-4 h-4" /> <span className="font-black uppercase tracking-widest text-[10px]">EmailJS Configuration</span>
     </div>
     <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700 text-slate-300">
-      <p className="mb-2 opacity-50">// Your Secret Access Token</p>
-      <div className="flex items-center gap-2 bg-slate-950 p-2 rounded border border-slate-800">
-        <span className="text-emerald-400">nfp_7aB2...x9Z1kLp92mQv</span>
-        <div className="ml-auto w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+      <p className="mb-2 opacity-50 text-[9px]">// Template Variables Required:</p>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-slate-950 p-2 rounded border border-slate-800 text-emerald-400">{"{{name}}"}</div>
+        <div className="bg-slate-950 p-2 rounded border border-slate-800 text-emerald-400">{"{{email}}"}</div>
+        <div className="bg-slate-950 p-2 rounded border border-slate-800 text-emerald-400">{"{{business}}"}</div>
+        <div className="bg-slate-950 p-2 rounded border border-slate-800 text-emerald-400">{"{{phone}}"}</div>
       </div>
     </div>
-    <p className="text-[9px] text-slate-500 italic text-center">Do not share this token with anyone except your n8n workflow.</p>
+    <p className="text-[9px] text-slate-500 italic text-center">Your IDs are already safely saved in the code.</p>
   </div>
 );
 
 const steps: Step[] = [
   {
-    title: "Step 1: Get Alerts Yourself 🔔",
-    description: "Netlify can email you immediately whenever someone fills out the form. It takes 30 seconds to set up.",
+    title: "Step 1: Verify EmailJS Template 📩",
+    description: "Make sure your EmailJS account is ready to receive data from your Hostinger site.",
     type: 'action',
+    visual: <EmailJSVisual />,
     details: [
-      "🏠 GO TO: Netlify Dashboard > Your Site > Site Configuration.",
-      "📁 SIDEBAR: Click 'Forms' then scroll to 'Form notifications'.",
-      "➕ ADD: Click 'Add notification' > 'Email notification'.",
-      "📧 SETUP: Choose 'contact' form and enter your email (webcore112@gmail.com).",
-      "✅ TEST: Submit a form on your live site; you should get an email in 1-2 minutes."
+      "🔗 DASHBOARD: Go to EmailJS.com and log in.",
+      "📁 TEMPLATES: Open your 'template_3opp22e' email template.",
+      "📝 CONTENT: Ensure you use curly braces like {{name}} and {{email}} in your message.",
+      "✅ SAVE: Hit save to make sure the template is active and ready.",
+      "📧 TEST: Go to your website, fill out the form, and check your inbox."
     ]
   },
   {
-    title: "Step 2: Auto-Reply to Clients 📩",
-    description: "To send a professional 'Thank you' email to your client, we use Zapier (Beginner Friendly).",
+    title: "Step 2: Sync GitHub to Hostinger 🚀",
+    description: "Keep your website updated automatically whenever you make changes on GitHub.",
     type: 'action',
     details: [
-      "🔗 CONNECT: Go to Zapier.com and create a free account.",
-      "⚡ TRIGGER: Search for 'Netlify' and choose 'New Form Submission'.",
-      "🔌 LINK: Link your Netlify account and select the 'contact' form.",
-      "✉️ ACTION: Search for 'Gmail' and choose 'Send Email'.",
-      "📝 CONTENT: Use the form fields to fill in the 'To' address and your custom message."
+      "🏠 HOSTINGER: Log in to your Hostinger hPanel dashboard.",
+      "📁 GIT: Search for 'Git' in the sidebar search bar.",
+      "🔌 CONNECT: Ensure your GitHub repository is linked to your domain.",
+      "⚡ AUTO-DEPLOY: Turn on 'Auto-deployment' so updates go live instantly.",
+      "🔄 MANUAL: Use the 'Deploy' button if you want to push a specific update right now."
     ]
   },
   {
-    title: "Step 3: Advanced n8n Integration 🤖",
-    description: "Want to use n8n for custom workflows? You'll need a 'Personal Access Token' from your user profile.",
-    type: 'action',
-    visual: <TokenVisual />,
+    title: "Step 3: Ongoing Peace of Mind 🛡️",
+    description: "Managing your new professional digital presence is easy.",
+    type: 'success',
     details: [
-      "👤 PROFILE: Click your Avatar (top right) > User Settings.",
-      "💻 APPS: Select 'Applications' from the left sidebar.",
-      "🔑 TOKENS: Find 'Personal Access Tokens' and click 'New access token'.",
-      "📝 NAME: Call it 'n8n-connection' and click Generate.",
-      "📋 COPY: Copy the code immediately! You will never see it again once you close the page.",
-      "🔗 n8n: Paste this into the 'Access Token' field in your n8n Netlify Credential."
+      "📱 MOBILE: Test your site on your phone to ensure it looks perfect.",
+      "🔍 SEO: Your site is built for search engines. It takes 2-4 weeks to index on Google.",
+      "🛠️ UPDATES: If you need to change a price or photo, update the code in GitHub.",
+      "🤝 SUPPORT: Need help? Email webcore112@gmail.com and we'll reply in <12 hours."
     ]
   }
 ];
@@ -102,7 +100,7 @@ const DeploymentGuide: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <Settings className="w-7 h-7 text-white animate-spin-slow" />
             </div>
             <div>
-              <h3 className="font-black text-2xl tracking-tight">Admin & Automation Setup</h3>
+              <h3 className="font-black text-2xl tracking-tight">Admin & Launch Guide</h3>
               <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">Step {currentStep + 1} of {steps.length}</p>
             </div>
           </div>
@@ -131,7 +129,7 @@ const DeploymentGuide: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <div key={idx} className="flex gap-4 items-start bg-white p-5 rounded-2xl border border-slate-100 hover:border-cyan-200 transition-all">
                   <div className="mt-1">
                     {detail.includes('👤') ? <UserCheck className="w-5 h-5 text-purple-500" /> :
-                     detail.includes('💻') || detail.includes('🔗') ? <Cpu className="w-5 h-5 text-cyan-500" /> :
+                     detail.includes('💻') || detail.includes('🔌') ? <Cpu className="w-5 h-5 text-cyan-500" /> :
                      detail.includes('🔑') || detail.includes('📋') ? <Key className="w-5 h-5 text-amber-500" /> :
                      detail.includes('📧') ? <Mail className="w-5 h-5 text-blue-500" /> :
                      <CheckCircle className="w-5 h-5 text-emerald-500" />}
@@ -167,7 +165,7 @@ const DeploymentGuide: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   onClick={onClose}
                   className="bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl hover:bg-cyan-600 transition-all"
                 >
-                  Got it!
+                  Ready to Launch!
                 </button>
               )}
             </div>
