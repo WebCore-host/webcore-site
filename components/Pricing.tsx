@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Check, X, Shield, Zap, ShieldCheck, ArrowRight } from 'lucide-react';
 
@@ -39,23 +38,21 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       cta: "Choose Essential",
       icon: <Shield className="w-6 h-6 text-slate-400" />,
       features: [
-        { included: true, label: <span><strong>Tailormade 3-Page Website</strong></span> },
-        { included: true, label: <span><strong>Rapid 7-Day Launch</strong></span> },
-        { included: true, label: <span><strong>Mobile-Optimized Design</strong></span> },
-        { included: true, label: <span><strong>Custom Domain Setup</strong></span> },
-        { included: true, label: <span><strong>Premium Hosting Included</strong></span> },
-        { included: true, label: <span><strong>SSL Security Certificate</strong></span> },
-        { included: true, label: <span><strong>Custom Favicon Set Up</strong></span> },
-        { included: true, label: <span><strong>Standard Support</strong></span> },
+        { included: true, label: <span><strong>Tailormade 3-Page Website</strong> (Home, About, Contact)</span> },
+        { included: true, label: <span><strong>Rapid 7-Day Launch</strong> (Get online in one week)</span> },
+        { included: true, label: <span><strong>Mobile-Optimized Design</strong> (Looks great on phones too)</span> },
+        { included: true, label: <span><strong>Custom Domain Setup & Management</strong></span> },
+        { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
+        { included: true, label: <span><strong>SSL Security Certificate</strong> (The "Lock" icon for visitor trust)</span> },
+        { included: true, label: <span><strong>Custom Favicon Set Up</strong> (Branded browser tab icon)</span> },
+        { included: true, label: <span><strong>Standard Support</strong> (48-hour response time)</span> },
         { 
           included: true, 
-          label: <strong>Monthly Updates:</strong>,
+          label: <strong>On-Demand Content Updates:</strong>,
           subItems: [
-            <span>1 Client-Requested Enhancement</span>
+            <span><strong>1 Client-Requested Enhancements per month</strong> (Submit a request for text changes, image swaps, or new sections)</span>
           ]
-        },
-        { included: false, label: <span className="opacity-50">Advanced Lead Generation</span> },
-        { included: false, label: <span className="opacity-50">Trust & Visibility Tools</span> }
+        }
       ]
     },
     {
@@ -68,36 +65,36 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       cta: "Scale My Business",
       icon: <Zap className="w-6 h-6 text-cyan-500" />,
       features: [
-        { included: true, label: <span><strong>Tailormade 6-Page Website</strong></span> },
-        { included: true, label: <span><strong>Priority 72-Hour Launch</strong></span> },
-        { included: true, label: <span><strong>Mobile-Optimized Design</strong></span> },
-        { included: true, label: <span><strong>Custom Domain Setup</strong></span> },
-        { included: true, label: <span><strong>Premium Hosting Included</strong></span> },
-        { included: true, label: <span><strong>SSL Security Certificate</strong></span> },
-        { included: true, label: <span><strong>Custom Favicon Set Up</strong></span> },
-        { included: true, label: <span><strong>VIP Priority Support</strong></span> },
+        { included: true, label: <span><strong>Tailormade 6-Page Website</strong> (Home, About, Contact +3 of your choosing)</span> },
+        { included: true, label: <span><strong>Priority 72-Hour Launch</strong> (Skip the queue)</span> },
+        { included: true, label: <span><strong>Mobile-Optimized Design</strong> (Looks great on phones too)</span> },
+        { included: true, label: <span><strong>Custom Domain Setup & Management</strong></span> },
+        { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
+        { included: true, label: <span><strong>SSL Security Certificate</strong> (The "Lock" icon for visitor trust)</span> },
+        { included: true, label: <span><strong>Custom Favicon Set Up</strong> (Branded browser tab icon)</span> },
+        { included: true, label: <span><strong>VIP Priority Support</strong> (12-hour "Head of the Line" response time)</span> },
         { 
           included: true, 
-          label: <strong>Lead Generation:</strong>,
+          label: <strong>Advanced Lead Generation:</strong>,
           subItems: [
-            "Custom Contact Forms",
-            "Appointment Scheduling"
+            <strong>Custom Contact Forms with Instant Email Alerts</strong>,
+            <strong>Automated Appointment Scheduling Integration</strong>
           ]
         },
         { 
           included: true, 
-          label: <strong>Visibility Tools:</strong>,
+          label: <strong>Trust & Visibility Tools:</strong>,
           subItems: [
-            "Google Maps Integration",
-            "Social Media Profile Sync",
-            "Positive Review Banner"
+            <strong>Google Maps Location Integration</strong>,
+            <strong>Social Media Profile Syncing</strong>,
+            <strong>Featured "Positive Review" Banner</strong>
           ]
         },
         { 
           included: true, 
-          label: <strong>Monthly Updates:</strong>,
+          label: <strong>On-Demand Content Updates:</strong>,
           subItems: [
-            <span>3 Client-Requested Enhancements</span>
+            <span><strong>3 Client-Requested Enhancements per month</strong> (Submit a request for text changes, image swaps, or new sections)</span>
           ]
         }
       ]
@@ -189,7 +186,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
                           <X className="w-3.5 h-3.5 text-slate-300 stroke-[3]" />
                         )}
                       </div>
-                      <div className={`${feature.included ? 'text-slate-900 font-bold' : 'text-slate-300'}`}>
+                      <div className={`${feature.included ? 'text-slate-900' : 'text-slate-300'}`}>
                         {feature.label}
                       </div>
                     </div>
@@ -197,7 +194,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
                     {feature.included && feature.subItems && (
                       <ul className="ml-9 space-y-2 mt-1">
                         {feature.subItems.map((sub, sIdx) => (
-                          <li key={sIdx} className="flex items-start gap-3 text-[11px] text-slate-500 font-black uppercase tracking-wider">
+                          <li key={sIdx} className="flex items-start gap-3 text-[11px] text-slate-500 uppercase tracking-wider">
                             <span className="text-cyan-400 font-black">•</span>
                             <span className="leading-relaxed">{sub}</span>
                           </li>
