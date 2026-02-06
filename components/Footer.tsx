@@ -8,10 +8,6 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ setActiveTab, isMobile }) => {
-  const openGuide = () => {
-    window.dispatchEvent(new CustomEvent('open-deployment-guide'));
-  };
-
   const handleLinkClick = (e: React.MouseEvent, targetTab: 'home' | 'about' | 'pricing' | 'faq', anchorId: string) => {
     if (setActiveTab) {
       e.preventDefault();
@@ -114,12 +110,6 @@ const Footer: React.FC<FooterProps> = ({ setActiveTab, isMobile }) => {
 
         <div className="pt-8 border-t border-slate-800 flex flex-col md:row justify-between items-center gap-4 text-slate-500 text-[10px] font-black uppercase tracking-widest">
           <p>© {new Date().getFullYear()} WebCore Digital Solutions. All rights reserved.</p>
-          <button 
-            onClick={openGuide}
-            className="hover:text-cyan-400 transition-colors border border-slate-800 px-3 py-1 rounded-md"
-          >
-            Admin Guide
-          </button>
         </div>
       </div>
     </footer>
