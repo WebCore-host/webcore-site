@@ -6,6 +6,7 @@ interface Tier {
   name: string;
   description: string;
   price: string;
+  buildoutPrice: string;
   originalPrice: string;
   popular: boolean;
   cta: string;
@@ -34,6 +35,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       name: "ESSENTIAL PLAN",
       description: "Best for new businesses needing a professional launch.",
       price: "59",
+      buildoutPrice: "599",
       originalPrice: "159",
       popular: false,
       cta: "Choose Essential",
@@ -46,21 +48,15 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
         { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
         { included: true, label: <span><strong>SSL Security Certificate</strong> (The "Lock" icon for visitor trust)</span> },
         { included: true, label: <span><strong>Custom Favicon Set Up</strong> (Branded browser tab icon)</span> },
-        { included: true, label: <span><strong>Standard Support</strong> (48-hour response time)</span> },
-        { 
-          included: true, 
-          label: <strong>On-Demand Content Updates:</strong>,
-          subItems: [
-            <span><strong>1 Client-Requested Enhancements per month</strong> (Submit a request for text changes, image swaps, or new sections)</span>
-          ]
-        }
+        { included: true, label: <span><strong>Standard Support</strong> (48-hour response time)</span> }
       ]
     },
     {
       id: "growth",
       name: "GROWTH PLAN",
       description: "Perfect for scaling businesses ready to dominate.",
-      price: "69",
+      price: "99",
+      buildoutPrice: "799",
       originalPrice: "199",
       popular: true,
       cta: "Scale My Business",
@@ -95,7 +91,7 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
           included: true, 
           label: <strong>On-Demand Content Updates:</strong>,
           subItems: [
-            <span><strong>3 Client-Requested Enhancements per month</strong> (Submit a request for text changes, image swaps, or new sections)</span>
+            <span><strong>1 Client-Requested Enhancements per month</strong> (Submit a request for text changes, image swaps, or new sections)</span>
           ]
         }
       ]
@@ -114,11 +110,6 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
           </p>
           
           <div className="flex flex-col items-center gap-6 mt-12">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-950 rounded-2xl border border-slate-800 shadow-2xl">
-              <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
-              <span className="text-white font-black uppercase tracking-widest text-[10px]">DEPOSIT FOR SETUP: $500</span>
-            </div>
-
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative flex items-center gap-4 bg-white px-8 py-4 rounded-2xl border border-slate-100 shadow-sm">
@@ -161,6 +152,9 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
                     <span className="text-6xl font-black text-slate-900 tracking-tighter">${tier.price}</span>
                     <span className="text-slate-400 font-black text-sm uppercase tracking-widest">/mo</span>
                   </div>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">
+                    +${tier.buildoutPrice} for buildout
+                  </p>
                 </div>
               </div>
 
