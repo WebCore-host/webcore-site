@@ -63,8 +63,8 @@ const About: React.FC = () => {
                 
                 <div className="flex items-end justify-between">
                   <div>
-                    <div className="text-6xl font-black text-white mb-2 leading-none">24h</div>
-                    <div className="text-purple-400 font-black uppercase tracking-widest text-[10px]">Communication SLA</div>
+                    <div className="text-6xl font-black text-white mb-2 leading-none">Fast</div>
+                    <div className="text-purple-400 font-black uppercase tracking-widest text-[10px]">Communication</div>
                   </div>
                   <Zap className="w-12 h-12 text-purple-500/50" />
                 </div>
