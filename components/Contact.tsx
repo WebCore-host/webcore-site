@@ -54,48 +54,34 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     e.preventDefault();
     setIsSubmitting(true);
     
-    const SERVICE_ID = "service_44qh385";
-    const TEMPLATE_ID = "template_3opp22e";
-    const PUBLIC_KEY = "SG4WeKfWxYcNug6zc";
-    
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-    const planLabels: Record<string, string> = {
-      essential: "Essential Plan ($59/mo)",
-      growth: "Growth Plan ($69/mo)",
-      not_sure: "Not Sure Yet"
-    };
-
-    const templateParams = {
+    const payload = {
       name: formValues.name,
       email: formValues.email,
       business: formValues.business,
       phone: formValues.phone,
-      plan: planLabels[formValues.plan as string] || formValues.plan,
+      plan: formValues.plan,
       message: formValues.message,
     };
 
     try {
-      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          service_id: SERVICE_ID,
-          template_id: TEMPLATE_ID,
-          user_id: PUBLIC_KEY,
-          template_params: templateParams
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setSubmitted(true);
         setPhone('');
       } else {
-        const errorText = await response.text();
-        throw new Error(`EmailJS Error: ${errorText}`);
+        throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
       console.error("Submission error:", error);
