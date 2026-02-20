@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'WebCore Contact <onboarding@resend.dev>', // Change after verifying domain
+        from: 'WebCore Contact <webcore112@gmail.com>', // Change after verifying domain
         to: 'webcore112@gmail.com',
         reply_to: formData.email,
         subject: `New Lead: ${formData.business} - ${planLabels[formData.plan] || formData.plan}`,
