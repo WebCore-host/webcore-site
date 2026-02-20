@@ -1,6 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Send, Mail, MessageSquare, CheckCircle2, ChevronDown, X } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init('SG4WeKfWxYcNug6zc');
+
 
 interface ContactProps {
   isModal?: boolean;
