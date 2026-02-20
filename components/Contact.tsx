@@ -1,6 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Send, Mail, MessageSquare, CheckCircle2, ChevronDown, X } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init('SG4WeKfWxYcNug6zc');
 
 interface ContactProps {
   isModal?: boolean;
@@ -57,26 +61,24 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-    const payload = new FormData();
-    payload.append('name', formValues.name as string);
-    payload.append('email', formValues.email as string);
-    payload.append('business', formValues.business as string);
-    payload.append('phone', formValues.phone as string);
-    payload.append('plan', formValues.plan as string);
-    payload.append('message', formValues.message as string);
+    const templateParams = {
+      name: formValues.name,
+      email: formValues.email,
+      business: formValues.business,
+      phone: formValues.phone,
+      plan: formValues.plan,
+      message: formValues.message,
+    };
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/webcore112@gmail.com", {
-        method: "POST",
-        body: payload,
-      });
+      await emailjs.send(
+        'service_44qh385',
+        'template_3opp22e',
+        templateParams
+      );
 
-      if (response.ok) {
-        setSubmitted(true);
-        setPhone('');
-      } else {
-        throw new Error('Failed to send message');
-      }
+      setSubmitted(true);
+      setPhone('');
     } catch (error) {
       console.error("Submission error:", error);
       alert("Submission error. Please check your internet connection or email webcore112@gmail.com directly.");
