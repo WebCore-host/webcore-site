@@ -53,35 +53,29 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-    const payload = {
-      name: formValues.name,
-      email: formValues.email,
-      business: formValues.business,
-      phone: formValues.phone,
-      plan: formValues.plan,
-      message: formValues.message,
-    };
+    const payload = new FormData();
+    payload.append('name', formValues.name as string);
+    payload.append('email', formValues.email as string);
+    payload.append('business', formValues.business as string);
+    payload.append('phone', formValues.phone as string);
+    payload.append('plan', formValues.plan as string);
+    payload.append('message', formValues.message as string);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://formsubmit.co/ajax/webcore112@gmail.com", {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload),
+        body: payload,
       });
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
+      if (response.ok) {
         setSubmitted(true);
         setPhone('');
       } else {
-        throw new Error(result.error || 'Failed to send message');
+        throw new Error('Failed to send message');
       }
     } catch (error) {
       console.error("Submission error:", error);
