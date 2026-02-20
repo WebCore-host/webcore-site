@@ -61,24 +61,26 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-    const templateParams = {
-      name: formValues.name,
-      email: formValues.email,
-      business: formValues.business,
-      phone: formValues.phone,
-      plan: formValues.plan,
-      message: formValues.message,
-    };
+    const payload = new FormData();
+    payload.append('name', formValues.name as string);
+    payload.append('email', formValues.email as string);
+    payload.append('business', formValues.business as string);
+    payload.append('phone', formValues.phone as string);
+    payload.append('plan', formValues.plan as string);
+    payload.append('message', formValues.message as string);
 
     try {
-      await emailjs.send(
-        'service_44qh385',
-        'template_3opp22e',
-        templateParams
-      );
+      const response = await fetch("https://formsubmit.co/ajax/webcore112@gmail.com", {
+        method: "POST",
+        body: payload,
+      });
 
-      setSubmitted(true);
-      setPhone('');
+      if (response.ok) {
+        setSubmitted(true);
+        setPhone('');
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
       console.error("Submission error:", error);
       alert("Submission error. Please check your internet connection or email webcore112@gmail.com directly.");
@@ -86,6 +88,7 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       setIsSubmitting(false);
     }
   };
+
 
   const modalAnimationClasses = isModal 
     ? `transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
