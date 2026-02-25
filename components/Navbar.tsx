@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, isMobile }) =>
 
               {/* Main CTA - Always Visible */}
               <a href="#contact" onClick={(e) => handleNavClick(e, activeTab || 'home', '#contact')} className="gradient-bg text-white px-5 md:px-8 py-2.5 md:py-3 rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest hover:shadow-2xl hover:shadow-cyan-200 transition-all active:scale-95">
-                Take the next step
+                Next step
               </a>
 
               {/* Universal Menu Toggle - Always Visible */}
