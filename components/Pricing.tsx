@@ -41,8 +41,8 @@ const Pricing: React.FC<{ onPlanSelect?: (planId: string) => void }> = ({ onPlan
       cta: "Choose Essential",
       icon: <Shield className="w-6 h-6 text-slate-400" />,
       features: [
-        { included: true, label: <span><strong>Tailormade 3-Page Website</strong> (Home, About, Contact)</span> },
-        { included: true, label: <span><strong>Rapid 2-Week Launch</strong> (Get online in two weeks)</span> },
+        { included: true, label: <span><strong>Tailor-made 5-page website</strong> (Home, About, Contact + 2 of your choosing)</span> },
+        { included: true, label: <span><strong>Rapid 2-3 week launch</strong> (Get online in 2-3 weeks)</span> },
         { included: true, label: <span><strong>Mobile-Optimized Design</strong> (Looks great on phones too)</span> },
         { included: true, label: <span><strong>Custom Domain Setup & Management</strong></span> },
         { included: true, label: <span><strong>Premium Website Hosting Included</strong></span> },
