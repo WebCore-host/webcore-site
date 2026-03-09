@@ -62,7 +62,6 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
 
-// REPLACE with this:
     const templateParams = {
       name: formValues.name,
       email: formValues.email,
@@ -71,23 +70,15 @@ const Contact: React.FC<ContactProps> = ({ isModal = false, initialPlan, onClose
       plan: formValues.plan,
       message: formValues.message,
     };
-    
-    await emailjs.send(
-      'service_44qh385',
-      'template_3opp22e',
-      templateParams
-    );
-    
-    setSubmitted(true);
-    setPhone('');
-    
 
-      if (response.ok) {
-        setSubmitted(true);
-        setPhone('');
-      } else {
-        throw new Error('Failed to send message');
-      }
+    try {
+      await emailjs.send(
+        'service_44qh385',
+        'template_3opp22e',
+        templateParams
+      );
+      setSubmitted(true);
+      setPhone('');
     } catch (error) {
       console.error("Submission error:", error);
       alert("Submission error. Please check your internet connection or email webcore112@gmail.com directly.");
